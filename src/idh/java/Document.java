@@ -3,8 +3,10 @@ package idh.java;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.StringTokenizer;
 
-public class Document {
+public class Document implements Iterable<String> {
 	String documentText;
 
 	public static Document readFromFile(File f) throws IOException {
@@ -31,6 +33,32 @@ public class Document {
 	
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
+		for(String s : d) {
+			System.out.println(s);
+		}
+	}
+
+	@Override
+	public Iterator<String> iterator() {
+		return new StringIterator();
+	}
+
+	// Hack to get the Iterator working 
+	// As an true token generator ... a little bit unusable
+	// because it still will include ".", ",", """, etc.
+	class StringIterator implements Iterator<String> {
+		StringTokenizer st = new StringTokenizer(documentText);
+
+		@Override
+		public boolean hasNext() {
+			return st.hasMoreTokens();
+		}
+
+		@Override
+		public String next() {
+			return st.nextToken();
+		}
+		
 	}
 	
 }

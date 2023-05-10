@@ -17,8 +17,16 @@ public class MyLinkedList<T> implements List<T> {
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int s = 0;
+		if (first == null)
+			return s;
+
+		ListElement current = first;
+		while(current.next != null) {
+			s++;
+			current = current.next;
+		}
+		return s;
 	}
 
 	@Override
@@ -28,7 +36,14 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		ListElement current = first;
+		while(current.next != null) {
+			if (current == o) {
+				return true;
+			}
+
+			current = current.next;
+		}
 		return false;
 	}
 
@@ -54,8 +69,14 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		int s = this.size();
+		Object[] o = new Object[s];
+		int c = 0;
+		for(T t : this) {
+			o[c] = t;
+			c++;
+		}
+		return o;
 	}
 
 	@Override
@@ -82,7 +103,13 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		if (this.contains(o)) {
+			int i = this.indexOf(o);
+			ListElement e1 = getElement(i - 1);
+			ListElement e2 = getElement(i + 1);
+			e1.next = e2;
+			return true;
+		}
 		return false;
 	}
 
@@ -103,8 +130,21 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
+		// This is a good looking solution for this function
+		// A probably more performant version would be
+		// creating a list for the new collection
+		// and then changing the "pointer" for the first element
+		// to the first element on the list and the last element 
+		// of the list to the first element of the cut out list
+		// I like this version more because it looks IMO better
+		int e = 0;
+		boolean lc = false;
+		for (T t : c) {
+			add(index + e, t);
+			e++;
+			lc = true;
+		}
+		return lc;
 	}
 
 	@Override
@@ -132,31 +172,50 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+		ListElement e = getElement(index);
+		e.value = element;
+		return e.value;
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		ListElement f = getElement(index - 1);
+		ListElement l = getElement(index);
+		ListElement t = new ListElement(element);
+		f.next = t;
+		t.next = l;
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
-		return null;
+		ListElement f = getElement(index - 1);
+		ListElement t = getElement(index);
+		ListElement l = getElement(index + 1);
+		f.next = l;
+		return t.value;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int c = 0;
+		for(T t : this) {
+			if (t == o)
+				return c;
+			c++;
+		}
+		return -1;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int r = -1;
+		int c = 0;
+		for(T t : this) {
+			if (t == o)
+				r = c;
+			c++;
+		}
+		return r > 0 ? r : -1;
 	}
 
 	@Override
