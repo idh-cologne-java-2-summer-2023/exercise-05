@@ -3,10 +3,13 @@ package idh.java;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.*;
 
-public class Document {
-	String documentText;
 
+public class Document implements Iterable<String>{
+	
+ static String documentText; 
+ 
 	public static Document readFromFile(File f) throws IOException {
 		FileReader fileReader = new FileReader(f);
 		int ch;
@@ -21,7 +24,30 @@ public class Document {
 		return doc;
 	}
 	
-	public String getDocumentText() {
+	class StringIterator implements Iterator<String>{
+		StringTokenizer tokens;
+		
+		public StringIterator() {
+			this.tokens = new StringTokenizer(documentText);
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return tokens.hasMoreElements();
+		}
+		
+		@Override
+		public String next(){
+			return tokens.nextToken();
+		}
+	}
+	
+	
+	public Iterator<String> iterator() {
+		return new StringIterator();
+	}
+	
+	public static String getDocumentText() {
 		return documentText;
 	}
 
@@ -29,8 +55,14 @@ public class Document {
 		this.documentText = documentText;
 	}
 	
-	public static final void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
+		Iterator<String> iter = d.iterator();
+		
+		while(iter.hasNext() == true) {
+			System.out.println(iter.next());
+		}
+		
 	}
 	
 }
