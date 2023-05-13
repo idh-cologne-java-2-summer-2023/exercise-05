@@ -5,20 +5,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+//https://docs.oracle.com/javase/8/docs/api/java/util/List.html
 
 public class MyLinkedList<T> implements List<T> {
 
 	/**
 	 * We only need to store the very first element of our list, 
-	 * because it will now whether there is a next element.
+	 * because it will know whether there is a next element.
 	 */
 	ListElement first;
-	
+	int numberOfElements = 0;
 	
 	@Override
 	public int size() {
 		// TODO Implement!
-		return 0;
+		
+		return numberOfElements;
 	}
 
 	@Override
@@ -29,7 +31,14 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean contains(Object o) {
 		// TODO Implement!
-		return false;
+		boolean inList = false;
+		for (int i =0; i < this.size(); i++) {
+			//System.out.println(this.get(i));
+			if(this.get(i).equals(o)) {
+				inList = true;
+			}
+		}	
+		return inList;
 	}
 
 	@Override
@@ -55,7 +64,12 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public Object[] toArray() {
 		// TODO Implement!
-		return null;
+		Object[] ListAsArray = new Object[this.size()];
+		
+		for (int i =0; i < this.size(); i++) {
+			ListAsArray[i] = this.get(i);
+		}			
+		return ListAsArray;
 	}
 
 	@Override
@@ -73,11 +87,16 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean add(T e) {
 		ListElement newListElement = new ListElement(e);
-		if (first == null)
+		if (first == null) {
 			first = newListElement;
-		else
-			last().next = newListElement;
+		numberOfElements = 1;
+	}
+		else {
+		last().next = newListElement;
+		numberOfElements++;
+		}
 		return true;
+		
 	}
 
 	@Override
@@ -275,9 +294,24 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
+		ll.add("lol");
+		ll.add("rofl");
 		ll.get(0);
-		for (String s : ll) {
+		/*for (String s : ll) {
 			System.out.println(s);
-		}
+		}*/
+		
+		//Test für size()
+		System.out.println(ll.size());
+		
+		//Test für contains()
+		System.out.println(ll.contains("Hallo"));	//true
+		System.out.println(ll.contains("rofl"));  	//true
+		System.out.println(ll.contains("jitetnit"));  //false
+		
+		//Test für toArray()
+		Object[] test = ll.toArray();
+		System.out.println(test[0]);
+		System.out.println(test[ll.size()-1]);
 	}
 }
