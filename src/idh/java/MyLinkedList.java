@@ -10,15 +10,21 @@ public class MyLinkedList<T> implements List<T> {
 
 	/**
 	 * We only need to store the very first element of our list, 
-	 * because it will now whether there is a next element.
+	 * because it will know whether there is a next element.
 	 */
 	ListElement first;
 	
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		
+		int count = 0;
+		ListElement current = first;
+		while (current != null) {
+			count++;
+			current = current.next;
+		}
+		return count;
 	}
 
 	@Override
@@ -28,7 +34,13 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		ListElement current = first;
+		while (current != null) {
+			if (current.value.equals(o)) {
+				return true;
+			}
+			current = current.next;
+		}
 		return false;
 	}
 
@@ -54,8 +66,12 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		Object[] objArr = new Object[size()];
+		int index  = 0;
+		for (Object element : this) {
+			objArr[index++] = element;
+		}
+		return objArr;
 	}
 
 	@Override
@@ -82,7 +98,24 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		if (isEmpty()) {
+			return false;
+		}
+		if (first.value.equals(o)) {
+			first = first.next;
+			return true;
+		}
+		ListElement previous = first;
+		ListElement current = first.next;
+		while (current != null) {
+			if (current.value.equals(o)) {
+				previous.next = current.next;
+				return true;
+			}
+			previous = current;
+			current = current.next;
+		}
+		
 		return false;
 	}
 
@@ -103,7 +136,12 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
+		int i = index;
+		for (T element : c) {
+			add(i++, element);
+			return true;
+		}
+
 		return false;
 	}
 
@@ -132,31 +170,79 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+		if(get(index) != null) {
+			T former = get(index);
+			add(index, element);
+			return former;
+		} else {
+			add(index, element);
+			return null;
+		}
+		
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		ListElement previous = this.getElement(index-1);
+		ListElement currentElement = this.getElement(index);
+		ListElement newElement = new ListElement(element);
+
+		if(previous == null) {
+			this.first.value = newElement.value;
+			newElement.next.value = currentElement.value;
+		}else {
+			previous.next.value = newElement.value;
+			newElement.next.value = currentElement.value;
+		}
+
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
-		return null;
+		ListElement previous = this.getElement(index-1);
+		ListElement deletedElement = this.getElement(index);
+		ListElement nextElement = this.getElement(index+1);
+
+		if(previous == null) {
+			this.first = nextElement;
+		}else {
+			previous.next = nextElement;
+		}
+		return deletedElement.value;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int index = 0;
+		if(index == this.size())
+			return -1;
+		
+		ListElement current = first;
+		while(current != null) {	
+			if(current.value.equals(o)) {
+				return index;
+			}else {
+				current = current.next;
+				index++;
+			}
+		}
+
+		return index;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+				
+			int size = this.size();
+			int i = size;
+			while(size > 0 && i != -1) {
+				if(get(i) == o) {
+					return i;
+				}else {
+					i--;
+				}
+	        }
+			return -1;
 	}
 
 	@Override
