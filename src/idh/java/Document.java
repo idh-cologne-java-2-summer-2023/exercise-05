@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.StringTokenizer;
 
 public class Document implements Iterable<String> {
 	String documentText;
@@ -32,12 +33,34 @@ public class Document implements Iterable<String> {
 
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
+
+		for (String token : d) {
+			System.out.println(token);
+		}
 	}
 
 	@Override
 	public Iterator<String> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new DocumentIterator();
+	}
+
+	private class DocumentIterator implements Iterator<String> {
+		private StringTokenizer tokenizer;
+
+		public DocumentIterator() {
+			this.tokenizer = new StringTokenizer(Document.this.documentText);
+		}
+
+		@Override
+		public boolean hasNext() {
+			return this.tokenizer.hasMoreTokens();
+		}
+
+		@Override
+		public String next() {
+			return this.tokenizer.nextToken();
+		}
+
 	}
 
 }
