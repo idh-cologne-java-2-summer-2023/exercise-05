@@ -9,7 +9,7 @@ public class MyLinkedList<T> implements List<T> {
 
 	/**
 	 * We only need to store the very first element of our list, because it will now
-	 * whether there is a next element.
+	 * whether there is a next element..
 	 */
 	ListElement first;
 
