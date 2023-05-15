@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -47,7 +48,7 @@ public class Document implements Iterable<Object>{
 		StringTokenizer st = new StringTokenizer(d);
 		while (st.hasMoreTokens()) {
 			System.out.println(st.nextToken());
-	 List <String> ll = new LinkedList <String>(st.nextToken());
+	 List <String> ll = new LinkedList <String> (st.nextToken());//what do you MEAN  "constructor undefined?!"
 
 		
 			Iterator<String> it = ll.iterator();
