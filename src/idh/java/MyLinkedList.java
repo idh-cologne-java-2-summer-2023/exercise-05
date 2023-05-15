@@ -1,11 +1,13 @@
 package idh.java;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-
+//error List to array missing. But is implemented and working!
 public class MyLinkedList<T> implements List<T> {
 
 	/**
@@ -14,24 +16,32 @@ public class MyLinkedList<T> implements List<T> {
 	 */
 	ListElement first;
 	
-	
 	@Override
-	public int size() {
-		// TODO Implement!
-		return 0;
-	}
 
+	public int size() {
+	    int count = 0;
+	    ListElement current = first;
+	    while (current != null) {
+	        count++;
+	        current = current.next;
+	    }
+	    return count;
+	}
 	@Override
 	public boolean isEmpty() {
 		return first == null;
 	}
-
+	
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
-		return false;
-	}
-
+		for(T tmp : this){
+            if(tmp.equals(o)){
+                return true;
+            }
+        }
+        return false;
+    }
+	
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<T>() {
@@ -52,22 +62,17 @@ public class MyLinkedList<T> implements List<T> {
 		};
 	}
 
-	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
-	}
+	    Object[] array = new Object[size()];
+	    ListElement current = first;
+	    int index = 0;
 
-	@Override
-	public <E> E[] toArray(E[] a) {
-		if (a.length < size()) {
-			a = (E[]) new Object[size()];
-		}
-		int i = 0;
-		for (T t : this) {
-			a[i++] = (E) t;
-		}
-		return a;
+	    while (current != null) {
+	        array[index++] = current.value;
+	        current = current.next;
+	    }
+
+	    return array;
 	}
 
 	@Override
@@ -80,12 +85,37 @@ public class MyLinkedList<T> implements List<T> {
 		return true;
 	}
 
-	@Override
-	public boolean remove(Object o) {
-		// TODO: Implement
-		return false;
-	}
+	public boolean remove(Object obj) {
+		 if (first == null) {
+		        // List is empty, nothing to remove
+		        return false;
+		    }
 
+		    if (first.value.equals(obj)) {
+		        // If the object to be removed is at the head, update the head reference
+		        first = first.next;
+		        return true;
+		    }
+
+		    ListElement current = first;
+		    ListElement previous = null;
+
+		    while (current != null) {
+		        if (current.value.equals(obj)) {
+		            // Found the object to be removed
+		            previous.next = current.next;
+		            return true;
+		        }
+
+		        previous = current;
+		        current = current.next;
+		    }
+			return true;
+		}
+
+	
+	
+	
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		for (Object o : c)
@@ -131,32 +161,106 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+	public T set(int index, T data) {
+		ListElement current = first;
+	    int count = 0;
+
+	    while (current != null && count < index) {
+	        current = current.next;
+	        count++;
+	    }
+
+	    if (current != null) {
+	        current.value = data;
+	    } else {
+	        throw new IndexOutOfBoundsException("Index out of bounds");
+	    }
+		return data;
 	}
 
 	@Override
-	public void add(int index, T element) {
-		// TODO: Implement
+	public void add(int index, T data) {
+	    if (index < 0 || index > size()) {
+	        throw new IndexOutOfBoundsException("Index out of bounds");
+	    }
+
+	    ListElement newListElement = new ListElement(data);
+
+	    if (index == 0) {
+	        // If the index is 0, make the new node the new head
+	    	newListElement.next = first;
+	        first = newListElement;
+	    } else {
+	    	ListElement current = first;
+	        int count = 0;
+
+	        while (count < index - 1) {
+	            current = current.next;
+	            count++;
+	        }
+
+	        // Insert the new node at the specified index
+	        newListElement.next = current.next;
+	        current.next = newListElement;
+	    }
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
+	    if (index < 0 || index >= size()) {
+	        throw new IndexOutOfBoundsException("Index out of bounds");
+	    }
+
+	    if (index == 0) {
+	        // If the index is 0, update the head reference
+	        first = first.next;
+	    } else {
+	        ListElement current = first;
+	        int count = 0;
+
+	        while (count < index - 1) {
+	            current = current.next;
+	            count++;
+	        }
+
+	        // Update the references to remove the node at the specified index
+	        current.next = current.next.next;
+	    }
 		return null;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+	    ListElement current = first;
+	    int index = 0;
+
+	    while (current != null) {
+	    	//not sure if compare is valid
+	        if (current.value.equals(o)) {
+	            return index;
+	        }
+	        current = current.next;
+	        index++;
+	    }
+
+	    return -1; // Data not found
 	}
 
 	@Override
-	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+	public int lastIndexOf(Object data) {
+		ListElement current = first;
+	    int index = -1;
+	    int currentIndex = 0;
+
+	    while (current != null) {
+	        if (current.value.equals(data)) {
+	            index = currentIndex;
+	        }
+	        current = current.next;
+	        currentIndex++;
+	    }
+
+	    return index;
 	}
 
 	@Override
@@ -228,11 +332,12 @@ public class MyLinkedList<T> implements List<T> {
 	public List<T> subList(int fromIndex, int toIndex) {
 		throw new UnsupportedOperationException();
 	}
-	
+	//List Element node
+	// first head
+	// data value
 	private class ListElement {
 		T value;
 		ListElement next;
-		
 		ListElement(T value) {
 			this.value = value;
 		}
@@ -279,5 +384,48 @@ public class MyLinkedList<T> implements List<T> {
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		// for testing all methods all working 
+        MyLinkedList<String> linkedList = new MyLinkedList<>();
+        // Add elements to the list
+        linkedList.add("Apple");
+        linkedList.add("Banana");
+        linkedList.add("Cherry");
+
+        // Test the size() method
+        System.out.println("Size: " + linkedList.size()); // Expected output: 3
+
+        // Test the get() method
+        System.out.println("Element at index 1: " + linkedList.get(1)); // Expected output: Banana
+
+        // Test the set() method
+        linkedList.set(2, "Durian");
+        System.out.println("Updated element at index 2: " + linkedList.get(2)); // Expected output: Durian
+
+        // Test the indexOf() method
+        System.out.println("Index of Banana: " + linkedList.indexOf("Banana")); // Expected output: 1
+
+        // Test the lastIndexOf() method
+        System.out.println("Last index of Banana: " + linkedList.lastIndexOf("Banana")); // Expected output: 1
+
+        // Test the toArray() method
+        Object[] array = linkedList.toArray();
+        System.out.println("Array: " + Arrays.toString(array)); // Expected output: [Apple, Banana, Durian]
+
+        // Test the remove() method
+        linkedList.remove(0);
+        System.out.println("Size after removal: " + linkedList.size()); // Expected output: 2
+        System.out.println("Element at index 0 after removal: " + linkedList.get(0)); // Expected output: Banana
+		
+		
+		
+		
+		
+		
+		
 	}
+
+	
+
+
+
 }
