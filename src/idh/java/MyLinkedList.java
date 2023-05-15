@@ -32,7 +32,6 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
 		for (T t: this) {
 			if(t == o)
 				return true;
@@ -63,6 +62,12 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public Object[] toArray() {
 		// TODO Implement!
+		int counter = 0;
+		Object[] oArray = new Object[size()];
+		for(T t: this) {
+			oArray[counter] = t;
+			counter++;
+		}
 		return null;
 	}
 
