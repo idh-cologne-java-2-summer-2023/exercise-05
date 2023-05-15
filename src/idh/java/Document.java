@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
 
-public class Document implements Iterable{
+public class Document implements Iterable<Object>{
 	String documentText;
 	
 
@@ -40,6 +42,16 @@ public class Document implements Iterable{
 	public Iterator iterator() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+
+		//What is the f***ing variable with the text in it?!
+		StringTokenizer st = new StringTokenizer(d);
+		while (st.hasMoreTokens()) {
+			System.out.println(st.nextToken());
+	 List <String> ll = new LinkedList <String>(st.nextToken());
+
+		
+			Iterator<String> it = ll.iterator();
 	}
 	
+}
 }
