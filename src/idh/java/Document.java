@@ -33,4 +33,4 @@ public class Document {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
 	}
 	
-}
+};
