@@ -10,15 +10,21 @@ public class MyLinkedList<T> implements List<T> {
 
 	/**
 	 * We only need to store the very first element of our list, 
-	 * because it will now whether there is a next element.
+	 * because it will know whether there is a next element.
 	 */
 	ListElement first;
 	
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int s = 0;
+		Iterator<T> it = this.listIterator();
+		
+		while (it.hasNext()) {
+			it.next();
+			s++;
+		}
+		return s;
 	}
 
 	@Override
@@ -28,12 +34,18 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		Iterator<T> it = this.listIterator();
+		
+		while (it.hasNext()) {
+			if (it.next().equals(o)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
-	public Iterator<T> iterator() {
+	public Iterator<T> iterator() { // what is the difference to 'listiterator()'?
 		return new Iterator<T>() {
 			ListElement next = first;
 			
@@ -54,8 +66,14 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		Object[] o = new Object[this.size()];
+		int i = 0;
+		
+		for (T element : this) {
+			o[i] = element;
+			i++;
+		}
+		return o;
 	}
 
 	@Override
@@ -82,7 +100,14 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		Iterator<T> it = this.listIterator();
+		
+		while (it.hasNext()) {
+			if (it.next().equals(o)) {
+				it.remove();
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -103,7 +128,30 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
+		int i = 0;
+		ListElement current = first;
+//		ListElement previous = null;
+		
+		while (current != null) {
+			if (i == index-1) {
+//				ListElement firstOfColl = new ListElement(c.iterator().next());
+//				previous.next = c.iterator().hasNext() ? firstOfColl : null;
+				for (T element : c) {
+//					if (previous.next != null) {
+//						firstOfColl.next = current.next;
+//						continue;
+//					}
+					ListElement newListElement = new ListElement(element);
+					newListElement.next = current.next;
+					current.next = newListElement;
+					current = newListElement;
+				}
+				return true;
+			}
+//			previous = current;
+			current = current.next;
+			i++;
+		}
 		return false;
 	}
 
@@ -132,36 +180,96 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
+		ListElement current = first;
+		
+		int i = 0;
+		while (current != null) {
+			ListElement newListElement;
+//			if (i == index-2) {
+//				newListElement = new ListElement(element);
+//				newListElement.next = current.next.next;
+//				current.next = newListElement;
+//				return (T) newListElement;
+//			}
+			if (i == index-1) {
+				newListElement = new ListElement(element);
+				newListElement.next = current.next;
+				current.next = newListElement;
+				return (T) newListElement;
+			}
+			current = current.next;
+			i++;
+		}
 		return null;
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		ListElement current = first;
+		
+		int i = 0;
+		while (i < index && current != null) {
+			current = current.next;
+			i++;
+		}
+		if (i == index-1) {
+			ListElement newListElement = new ListElement(element);
+			newListElement.next = current.next;
+			current.next = newListElement;
+		}
+		
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
+		ListElement current = first;
+		int i = 0;
+		
+		while (current != null) {
+			if (i == index-1) {
+				current.next = current.next.next;
+				return (T) current.next;
+			}
+			current = current.next;
+			i++;
+		}
 		return null;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
+		ListElement current = first;
+		int i = 0;
+		
+		while (current != null) {
+			if (current.value.equals(o)) {
+				return i;
+			}
+			current = current.next;
+			i++;
+		}
 		return 0;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		ListElement current = first;
+		int i = 0;
+		int lastIndex = 0;
+		
+		while (current != null) {
+			if (current.value.equals(o)) {
+				lastIndex = i;
+			}
+			current = current.next;
+			i++;
+		}
+		return lastIndex;
 	}
 
 	@Override
 	public ListIterator<T> listIterator() {
-		return new ListIterator<T>() {
+		return new ListIterator<T>() { // list iterator class
 
 			ListElement previous = null;
 			ListElement next = first;
@@ -229,7 +337,7 @@ public class MyLinkedList<T> implements List<T> {
 		throw new UnsupportedOperationException();
 	}
 	
-	private class ListElement {
+	private class ListElement { // element class
 		T value;
 		ListElement next;
 		
@@ -271,11 +379,12 @@ public class MyLinkedList<T> implements List<T> {
 		return null;
 	}
 
+	
 	public static void main(String[] args) {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
-		ll.get(0);
+		
 		for (String s : ll) {
 			System.out.println(s);
 		}
