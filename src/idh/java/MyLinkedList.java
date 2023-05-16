@@ -96,18 +96,22 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO: Implement
-		boolean r = false;
+		if(first != null) {
+			if(first.value == o) {
+				first = first.next;
+				return true;
+			}
 		ListElement current = first;
 		ListElement previous = null;
-		while(current.next != null) {
-			if(current.value == o) {
+		for(T t: this) {
+			if(t == o) {
 				previous.next = current.next;
-				return r = true;
 			}
-		previous = current;
-		current = current.next;
+			previous = current;
+			current = current.next;
 		}
-		return r;
+		}
+		return true;
 	}
 
 	@Override
@@ -299,9 +303,16 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
+		ll.add("pups");
 		ll.get(0);
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		System.out.println("//");
+		ll.remove("pups");
+		for (String s : ll) {
+			System.out.println(s);
+		}
 	}
+	
 }
