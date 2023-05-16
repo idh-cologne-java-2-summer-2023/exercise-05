@@ -34,7 +34,7 @@ public class Document implements Iterable<String> {
 	@Override
 	public Iterator<String> iterator() {
 		StringTokenizer st = new StringTokenizer(documentText);
-		return new Iterator<String>() {
+		Iterator iterator = new Iterator<String>() {
 			@Override
 			public boolean hasNext() {
 				return st.hasMoreTokens();
@@ -45,6 +45,8 @@ public class Document implements Iterable<String> {
 				return st.nextToken();
 			}
 		};
+		SkipIterator skipiterator = new SkipIterator(2, iterator);
+		return skipiterator;
 	}
 
 	public static final void main(String[] args) throws IOException {
