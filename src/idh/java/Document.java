@@ -3,8 +3,9 @@ package idh.java;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
-public class Document {
+public class Document implements Iterable<String>{
 	String documentText;
 
 	public static Document readFromFile(File f) throws IOException {
@@ -14,10 +15,11 @@ public class Document {
 		while( (ch = fileReader.read()) != -1 ) {
 			b.append((char) ch);
 		}
+	
 		fileReader.close();
 		Document doc = new Document();
 		doc.documentText = b.toString();
-		
+
 		return doc;
 	}
 	
@@ -31,6 +33,22 @@ public class Document {
 	
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
+
+	}
+
+	@Override
+	public Iterator<String> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public class StringTokenizer {
+		StringTokenizer st1 = new StringTokenizer(Document);
+		
+		while (st1.hasMoreTokens())
+			
+			System.out.println(Document); //Versuch die Methode so wie bei https://www.geeksforgeeks.org/stringtokenizer-class-in-java/ anzu wenden //
+		
 	}
 	
 }

@@ -1,9 +1,16 @@
 package idh.java;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+import java.util.function.IntFunction;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 
 public class MyLinkedList<T> implements List<T> {
@@ -22,6 +29,30 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	@Override
+	public <T> T[] toArray(IntFunction<T[]> generator) {
+		// TODO Auto-generated method stub
+		return List.super.toArray(generator);
+	}
+
+	@Override
+	public boolean removeIf(Predicate<? super T> filter) {
+		// TODO Auto-generated method stub
+		return List.super.removeIf(filter);
+	}
+
+	@Override
+	public Stream<T> stream() {
+		// TODO Auto-generated method stub
+		return List.super.stream();
+	}
+
+	@Override
+	public Stream<T> parallelStream() {
+		// TODO Auto-generated method stub
+		return List.super.parallelStream();
+	}
+
+	@Override
 	public boolean isEmpty() {
 		return first == null;
 	}
@@ -30,6 +61,24 @@ public class MyLinkedList<T> implements List<T> {
 	public boolean contains(Object o) {
 		// TODO Implement!
 		return false;
+	}
+
+	@Override
+	public void replaceAll(UnaryOperator<T> operator) {
+		// TODO Auto-generated method stub
+		List.super.replaceAll(operator);
+	}
+
+	@Override
+	public void sort(Comparator<? super T> c) {
+		// TODO Auto-generated method stub
+		List.super.sort(c);
+	}
+
+	@Override
+	public Spliterator<T> spliterator() {
+		// TODO Auto-generated method stub
+		return List.super.spliterator();
 	}
 
 	@Override
@@ -53,15 +102,54 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public Object[] toArray() {
+	public Object[] toArray(){
 		// TODO Implement!
 		return null;
 	}
 
 	@Override
+	public void forEach(Consumer<? super T> action) {
+		// TODO Auto-generated method stub
+		List.super.forEach(action);
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+	}
+
+	@Override
 	public <E> E[] toArray(E[] a) {
 		if (a.length < size()) {
-			a = (E[]) new Object[size()];
+			E[] es2 = (E[]) new Object[size()];
+			E[] es = es2;
+			a = es;
 		}
 		int i = 0;
 		for (T t : this) {
@@ -276,6 +364,7 @@ public class MyLinkedList<T> implements List<T> {
 		ll.add("Hallo");
 		ll.add("Welt");
 		ll.get(0);
+		
 		for (String s : ll) {
 			System.out.println(s);
 		}
