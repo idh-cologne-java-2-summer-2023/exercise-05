@@ -1,10 +1,12 @@
 package idh.java;
 
 import java.io.File;
+import java.util.StringTokenizer;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
-public class Document {
+public class Document implements Iterable<String>{
 	String documentText;
 
 	public static Document readFromFile(File f) throws IOException {
@@ -29,8 +31,45 @@ public class Document {
 		this.documentText = documentText;
 	}
 	
-	public static final void main(String[] args) throws IOException {
-		Document d = Document.readFromFile(new File("data/dracula.txt"));
+	
+	@Override
+	public Iterator<String> iterator() {
+		// TODO Auto-generated method stub
+		return new StringTokenizerIterator(new StringTokenizer(documentText));
 	}
 	
+	private static class StringTokenizerIterator implements Iterator<String> {
+		private StringTokenizer tokenizer;
+		
+		public StringTokenizerIterator(StringTokenizer tokenizer) {
+			this.tokenizer = tokenizer;
+		}
+		
+		
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return tokenizer.hasMoreTokens();
+		}
+
+		@Override
+		public String next() {
+			// TODO Auto-generated method stub
+			return tokenizer.nextToken();
+		}
+	}
+	
+	public static final void main(String[] args) throws IOException {
+		Document d = Document.readFromFile(new File("data/dracula.txt"));
+		for (String token : d) {
+			System.out.print(token);
+		}
+	
+	}
+
+	
+	
 }
+
+

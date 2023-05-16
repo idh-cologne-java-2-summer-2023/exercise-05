@@ -18,7 +18,13 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public int size() {
 		// TODO Implement!
-		return 0;
+		int counting = 0;
+		ListElement current = first;
+		while(current != null) {
+			counting++;
+			current = current.next;
+		}
+		return counting;
 	}
 
 	@Override
@@ -54,8 +60,12 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		Object[] array = new Object[size()];
+		int index = 0;
+		for (T element : this) {
+			array[index++] = element;
+		}
+		return array;
 	}
 
 	@Override
@@ -82,9 +92,25 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		ListElement previous = null;
+		ListElement current = first;
+		
+		while (current!= null){
+if (current.value.equals(o)){
+	if (previous == null) {
+		first = current.next;
+		} else {
+			previous.next = current.next;
+			}
+		return true;
+		}
+
+previous = current;
+current = current.next;
+		} 
 		return false;
 	}
+
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
