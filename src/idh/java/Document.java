@@ -3,9 +3,13 @@ package idh.java;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.StringTokenizer;
 
-public class Document {
+public class Document implements Iterable<String>{
 	String documentText;
+	
+	String[] documentTextTokens;
 
 	public static Document readFromFile(File f) throws IOException {
 		FileReader fileReader = new FileReader(f);
@@ -31,6 +35,16 @@ public class Document {
 	
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
+		
+	}
+
+	@Override
+	public Iterator<String> iterator() {
+//		StringTokenizer st = new StringTokenizer(documentText);
+//		while (st.hasMoreTokens()) {
+//			st.nextToken();
+//	     }
+		return new StringIterator();
 	}
 	
 }
