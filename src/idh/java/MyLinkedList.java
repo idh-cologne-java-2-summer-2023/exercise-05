@@ -1,5 +1,6 @@
 package idh.java;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -64,12 +65,12 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public Object[] toArray() {
 		// TODO Implement!
-		Object[] ListAsArray = new Object[this.size()];
+		Object[] listAsArray = new Object[this.size()];
 		
 		for (int i =0; i < this.size(); i++) {
-			ListAsArray[i] = this.get(i);
+			listAsArray[i] = this.get(i);
 		}			
-		return ListAsArray;
+		return listAsArray;
 	}
 
 	@Override
@@ -102,6 +103,14 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO: Implement
+		for (int i =0; i < this.size(); i++) {
+			if(this.get(i).equals(o)) {
+				this.getElement(i).value = null;
+				this.getElement(i-1).next = this.getElement(i).next;
+				numberOfElements--;
+				return true;
+			}
+		}	
 		return false;
 	}
 
@@ -123,7 +132,12 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
 		// TODO Implement!
-		return false;
+		for (T t : c) { 
+				this.add(index, t);
+				index++;
+			}
+	
+	return false;
 	}
 
 	@Override
@@ -152,30 +166,83 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public T set(int index, T element) {
 		// TODO: Implement
+		this.getElement(index).value = element;
 		return null;
 	}
 
 	@Override
 	public void add(int index, T element) {
 		// TODO: Implement
+		ListElement neuesElement = new ListElement(element);
+		
+		if (index == 0) {
+			neuesElement.next = this.getElement(0);
+			this.first = neuesElement;	
+		}
+		
+		else if (index == (this.size() - 1)) {
+			this.getElement(index - 1).next = neuesElement;
+			neuesElement.next = null;	
+		}
+		
+		else {
+			neuesElement.next = this.getElement(index);
+			this.getElement(index - 1).next = neuesElement;	
+		}
+		this.numberOfElements++;
 	}
 
 	@Override
 	public T remove(int index) {
 		// TODO: Implement
+		if (index == 0) {
+			this.first = this.getElement(index + 1);
+			this.getElement(index).value = null;
+		}
+		
+		else if (index == (this.size() - 1)) {
+			this.getElement(index).value = null;
+			this.getElement(index - 1).next = null;	
+		}
+		
+		else {
+			this.getElement(index).value = null;
+			this.getElement(index - 1).next = this.getElement(index + 1);	
+		}
+		
+		this.numberOfElements--;
 		return null;
 	}
 
 	@Override
 	public int indexOf(Object o) {
 		// TODO: Implement
-		return 0;
+		int index = 0;
+		for (int i =0; i < this.size(); i++) {
+			if(this.get(i).equals(o)) {
+				index = i;
+				break;
+			}
+			else {
+				index = -1;
+			}
+		}
+		return index;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
 		// TODO: Implement
-		return 0;
+		int index = 0;
+		for (int i =0; i < this.size(); i++) {
+			if(this.get(i).equals(o)) {
+				index = i;
+			}
+			else {
+				index = -1;
+			}
+		}
+		return index;
 	}
 
 	@Override
@@ -297,21 +364,64 @@ public class MyLinkedList<T> implements List<T> {
 		ll.add("lol");
 		ll.add("rofl");
 		ll.get(0);
-		/*for (String s : ll) {
-			System.out.println(s);
-		}*/
-		
+			
 		//Test für size()
+		System.out.println("SIZE-TEST-----------------------------------------");
 		System.out.println(ll.size());
+		System.out.println();
 		
 		//Test für contains()
+		System.out.println("CONTAINS-TEST-----------------------------------------");
 		System.out.println(ll.contains("Hallo"));	//true
 		System.out.println(ll.contains("rofl"));  	//true
 		System.out.println(ll.contains("jitetnit"));  //false
+		System.out.println();
 		
 		//Test für toArray()
+		System.out.println("TOARRAY-TEST-----------------------------------------");
 		Object[] test = ll.toArray();
 		System.out.println(test[0]);
 		System.out.println(test[ll.size()-1]);
+		System.out.println();
+		
+		//Test für remove(Object o)
+		System.out.println("REMOVE-TEST-----------------------------------------");
+		ll.remove("rofl");
+		System.out.println(ll.get(ll.size()-1));	//lol
+		System.out.println(ll.size());	//3
+		ll.add("rofl");
+		System.out.println(ll.get(ll.size()-1));	//rofl
+		System.out.println(ll.size());	//4
+		System.out.println();
+		
+		//Test für Add(index, element), lastIndexOf, indexOf 
+		System.out.println("INDEX-UND-ADD-TEST-----------------------------------------");
+		ll.add("lol");
+		for (String s : ll) {
+			System.out.println(s);
+		}
+		System.out.println();
+		System.out.println("Index lol hinten: " + ll.lastIndexOf("lol"));
+		ll.add(1, "lol");
+		System.out.println("Index lol vorne: " + ll.indexOf("lol"));
+		
+		System.out.println();
+		for (String s : ll) {
+			System.out.println(s);
+		}
+		System.out.println("Aktuelle size ll: " + ll.size());
+		System.out.println();
+		
+		//Test für addAll(index, collection)
+		System.out.println("ADDALL-INDEX-COLLECTION-TEST-----------------------------------------");
+		ArrayList<String> testList = new ArrayList<>();
+		testList.add("was-geht");
+		testList.add("denn-so-ab?");
+		ll.addAll(2, testList);
+		for (String s : ll) {
+			System.out.println(s);
+		}
+		
+		
 	}
 }
