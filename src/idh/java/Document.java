@@ -4,13 +4,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class Document implements Iterable<Object>{
-	String documentText;
+	public  String documentText;
 	
 
 	public static Document readFromFile(File f) throws IOException {
@@ -34,6 +35,7 @@ public class Document implements Iterable<Object>{
 
 	public void setDocumentText(String documentText) {
 		this.documentText = documentText;
+		public static String text;
 	}
 	
 	public static final void main(String[] args) throws IOException {
@@ -46,11 +48,11 @@ public class Document implements Iterable<Object>{
 		throw new UnsupportedOperationException("Unimplemented method 'iterator'");
 
 		//What is the f***ing variable with the text in it?!
-		getDocumentText();
-		StringTokenizer st = new StringTokenizer( documentText , ",");
-		List <String> tokens = new LinkedList <String> ();
+		//Why is this unreacheable code?!
+		StringTokenizer st = new StringTokenizer(  documentText , ",");
+		ArrayList <String> tokens = new ArrayList <String> ();
 		Iterator<String> it = tokens.iterator();
-		while (st.hasMoreTokens()) {
+		while (it.hasNext()) {
 			tokens.add (st.nextToken());
 			int tokenAmount = st.countTokens();
 		//	System.out.println(st.nextToken());
