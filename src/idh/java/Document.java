@@ -34,8 +34,8 @@ public class Document implements Iterable<String>{
 	
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
-		for (String element : d) {
-			System.out.println(element);
+		for (String token : d) {
+			System.out.println(token);
 		}
 	}
 
