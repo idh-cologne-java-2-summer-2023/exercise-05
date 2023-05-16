@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
-public class Document implements Iterable<String> {
+public class Document implements Iterable<String>{
 	String documentText;
 
 	public static Document readFromFile(File f) throws IOException {
@@ -19,10 +19,10 @@ public class Document implements Iterable<String> {
 		fileReader.close();
 		Document doc = new Document();
 		doc.documentText = b.toString();
-
+		
 		return doc;
 	}
-
+	
 	public String getDocumentText() {
 		return documentText;
 	}
@@ -30,28 +30,57 @@ public class Document implements Iterable<String> {
 	public void setDocumentText(String documentText) {
 		this.documentText = documentText;
 	}
-
+	
+	
 	@Override
 	public Iterator<String> iterator() {
-		StringTokenizer st = new StringTokenizer(documentText);
-		return new Iterator<String>() {
-			@Override
+		private class TokenIterator implements Iterator<String> {
+			StringTokenizer tokenizer;
+
+			public TokenIterator() {
+				tokenizer = new StringTokenizer(documentText);
+			}
+
 			public boolean hasNext() {
-				return st.hasMoreTokens();
+				return tokenizer.hasMoreTokens();
 			}
 
-			@Override
 			public String next() {
-				return st.nextToken();
+				return tokenizer.nextToken();
 			}
-		};
+		}
 	}
+	
+	private static class StringTokenizerIterator implements Iterator<String> {
+		private StringTokenizer tokenizer;
+		
+		public StringTokenizerIterator(StringTokenizer tokenizer) {
+			this.tokenizer = tokenizer;
+		}
+		
+		
 
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return tokenizer.hasMoreTokens();
+		}
+
+		@Override
+		public String next() {
+			// TODO Auto-generated method stub
+			return tokenizer.nextToken();
+		}
+	}
+	
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
 		for (String token : d) {
-			System.out.println(token);
+			System.out.print(token);
 		}
+	
 	}
 
+	
+	
 }

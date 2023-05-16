@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class MyLinkedList<T> implements List<T> {
-
+	
+//Verstehe nicht wie ich den Teil machen soll :/
 	/**
 	 * We only need to store the very first element of our list,
 	 * because it will now whether there is a next element.
