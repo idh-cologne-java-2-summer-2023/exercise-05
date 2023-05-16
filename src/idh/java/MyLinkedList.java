@@ -14,7 +14,7 @@ public class MyLinkedList<T> implements List<T> {
 	 * because it will now whether there is a next element.
 	 */
 	ListElement first;
-	
+	//
 	
 	@Override
 	public int size() {
