@@ -137,8 +137,37 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
+		int size = size();
+		if (index < 0 || index > size()) {
+			throw new IndexOutOfBoundsException("Invalid index: " + index);
+		}
+
+		Object[] elementsToAdd = c.toArray();
+		int numElementsToAdd = elementsToAdd.length;
+
+		if (numElementsToAdd == 0) {
+			return false;
+		}
+
+		ListElement previous = getElement(index - 1);
+		ListElement current = previous != null ? previous.next : first; //wenn previous != null ist dann ist current = previous.next, ansonsten ist es first
+
+		for (Object element : elementsToAdd) { //für jedes Element in elementsToAdd
+			ListElement newElement = new ListElement((T) element); //neues Element erstellen
+
+			if (previous != null) {
+				previous.next = newElement; //wenn previous != 0 dann ist es nicht first und dementsprechend ist das aktuelle also previous.next das newElement, wo wir anfangen wollen
+			} else {
+				first = newElement; //ansonsten muss new Element = first sein also das Erste Element in der Liste
+			}
+
+			newElement.next = current; //für jedes Element das durchlaufen wird gilt newElement.next = current
+			previous = newElement; //das vorherige wird dann zu newElement
+			size++; //nur für den Zähler der Elemente innerhalb der Liste zuständig (vergrößert die Liste nicht, das passiert automatisch)
+			System.out.println("element added to size. Now there are " + size + " elements in the new list");
+		}
+
+		return true;
 	}
 
 	@Override
@@ -384,7 +413,7 @@ public class MyLinkedList<T> implements List<T> {
 		int size = ll.size();
 		System.out.println("Size: " + size);
 
-		int index = 3;
+		int index = 1;
 		String p = "Moin";
 		boolean contains = ll.contains(p);
 		System.out.println("Contains " + "'" + p + "'" + " is: " + contains);
@@ -427,14 +456,11 @@ public class MyLinkedList<T> implements List<T> {
 		ll.add(index, p);
 		ll.toArray();
 
-
-
-		//addAll
-		/*MyLinkedList<Integer> list = new MyLinkedList<>();
-		//List<Integer> otherList = Arrays.asList(1, 2, 3, 4, 5);
-		List<String> otherList = Arrays.asList("1", "2", "3");
-		list.addAll(otherList);
+		//add all
+		List<String> c = new ArrayList<>();
+		c.add("GUTEN");
+		c.add("TAG");
+		ll.addAll(index, c);
 		ll.toArray();
-		 */
 	}
 }
