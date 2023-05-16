@@ -18,25 +18,43 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public int size() {
 		// TODO Implement!
-		return 0;
+		//return 0;
+		int i = 0;
+		while(this.getElement(i) != null) {
+			i++;
+		}
+		return i;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return first == null;
+		//return first == null;
+		if(this.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean contains(Object o) {
 		// TODO Implement!
-		return false;
+		//return false;
+		int i;
+		for(i=0; i<this.size(); i++) {
+			if(this.getElement(i) == o) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<T>() {
 			ListElement next = first;
-			
+			//Die folgenden beiden Methoden müssten eigentlich so funktionieren und müssen nicht ergänzt werden...
 			@Override
 			public boolean hasNext() {
 				return next != null;
@@ -55,7 +73,15 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public Object[] toArray() {
 		// TODO Implement!
-		return null;
+		//return null;
+		Object[] arr = new Object[this.size()];
+		int i = 0;
+		while(this.isEmpty() == false) {
+			arr[i] = this.first;
+			//Wie bekomme ich hier Zugang zum nächsten Element?
+			//So bekomme ich einfach nur ein Array mit dem ersten Element an jeder Stelle...
+		}
+		return arr;
 	}
 
 	@Override
@@ -83,7 +109,15 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO: Implement
-		return false;
+		//return false;
+		if(this.contains(o)) {
+			int i;
+			for(i=0;i<this.size(); i++) {
+				if(this.getElement(i == o)) {
+					//Der Pointer des vorherigen Elements müsste statt auf dieses Element auf das nächste zeigen.
+				}
+			}
+		}
 	}
 
 	@Override
@@ -104,7 +138,9 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
 		// TODO Implement!
-		return false;
+		//return false;
+		//über die Collection müsste iteriert werden und nacheinander die einzelnen Elemnte zu der 
+		// linkedList geadded werden.
 	}
 
 	@Override
@@ -133,30 +169,57 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public T set(int index, T element) {
 		// TODO: Implement
-		return null;
+		//return null;
+		getElement(index).value = element;
 	}
 
 	@Override
 	public void add(int index, T element) {
 		// TODO: Implement
+		//Strategie: bis zum entsprechenden index die liste durchlaufen, den rest kopieren und temporär
+		// in einer Variablen speichern, dann das element mit der "normalen" add methode anhängen und /
+		// dann den Rest der Liste wieder addden.
 	}
 
 	@Override
 	public T remove(int index) {
 		// TODO: Implement
 		return null;
+		//Strategie: 
+		if(this.contains(o)) {
+			int i;
+			for(i=0;i<this.size(); i++) {
+				if(this.getElement(i == o)) {
+					//Der Pointer des vorherigen Elements müsste statt auf dieses Element auf das nächste zeigen.
+				}
+			}
+		}
 	}
 
 	@Override
 	public int indexOf(Object o) {
 		// TODO: Implement
-		return 0;
+		//return 0;
+		if(this.contains(o)) {
+			//Strategie: ein element nach dem anderen mit o abgleichen und mit einer int-variablen mitzählen
+			//am Ende die int-Variable zurückgeben.
+		} else {
+			return -1;
+		}
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
 		// TODO: Implement
-		return 0;
+		//return 0;
+		if(this.contains(o)) {
+			//Strategie: ein element nach dem anderen mit o abgleichen,
+			//bei einem "Treffer" die position in einer int-variablen speichern,
+			//wenn ein weiterer "Treffer" diese Position in der int-variablen speichern.
+			//am Ende die int-Variable zurückgeben.
+		} else {
+			return -1;
+		}
 	}
 
 	@Override

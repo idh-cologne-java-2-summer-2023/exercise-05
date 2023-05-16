@@ -3,8 +3,9 @@ package idh.java;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.StringTokenizer;
 
-public class Document {
+public class Document implements Iterable<String>{
 	String documentText;
 
 	public static Document readFromFile(File f) throws IOException {
@@ -31,6 +32,14 @@ public class Document {
 	
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
+		String text = d.getDocumentText();
+		StringTokenizer st = new StringTokenizer(text);
+		while(st.hasMoreTokens()) {
+			System.out.println(st.nextToken());
+		}
+		
+	//Merkwürdigerweise wird nicht der gesamte Text ausgegeben. 
+	//Vermutlich ist an irgeneiner Stelle nicht genug Speicherplatz.
 	}
 	
 }
