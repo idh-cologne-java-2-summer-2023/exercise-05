@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Document implements Iterable<String>{
-//Aufgabe 1. ziemlich unschön gelöst glaub ich.	
 	
 	String documentText;
 
@@ -40,9 +39,20 @@ public class Document implements Iterable<String>{
 // dracula wird eingelesen und ist jetzt d.documentText		
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
 		
-		for(String documentText : d) {
-			System.out.println(documentText);
-		}
+// Zu Aufgabe 1:
+// Fehlermeldung "Cannot invoke "String.length()" because "str" is null". Verschiedene Sachen versucht,
+// aber der StringTokenizer st in der TokenIterator Klasse erhält d.documentText nicht ordentlich und 
+//funktioniert daher nicht. Letzte Versuche unten.
+		
+//		TokenIterator tokenIter = new TokenIterator(d.documentText);
+//		
+//		while (tokenIter.hasNext()) {
+//			System.out.println(tokenIter.next());
+//		}
+//		
+//		for (String documentText : d) {
+//			System.out.println(documentText);
+//		}
 		
 	}
 	
