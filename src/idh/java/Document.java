@@ -7,51 +7,50 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 public class Document implements Iterable<String> {
-	String documentText;
+    private String documentText;
 
-	public static Document readFromFile(File f) throws IOException {
-		FileReader fileReader = new FileReader(f);
-		int ch;
-		StringBuilder b = new StringBuilder();
-		while( (ch = fileReader.read()) != -1 ) {
-			b.append((char) ch);
-		}
-		fileReader.close();
-		Document doc = new Document();
-		doc.documentText = b.toString();
+    public static Document loadFromFile(File file) throws IOException {
+        FileReader fileReader = new FileReader(file);
+        int ch;
+        StringBuilder builder = new StringBuilder();
+        while ((ch = fileReader.read()) != -1) {
+            builder.append((char) ch);
+        }
+        fileReader.close();
 
-		return doc;
-	}
+        Document doc = new Document();
+        doc.documentText = builder.toString();
+        return doc;
+    }
 
-	public String getDocumentText() {
-		return documentText;
-	}
+    public String getDocumentText() {
+        return documentText;
+    }
 
-	public void setDocumentText(String documentText) {
-		this.documentText = documentText;
-	}
+    public void setDocumentText(String documentText) {
+        this.documentText = documentText;
+    }
 
-	@Override
-	public Iterator<String> iterator() {
-		StringTokenizer st = new StringTokenizer(documentText);
-		return new Iterator<String>() {
-			@Override
-			public boolean hasNext() {
-				return st.hasMoreTokens();
-			}
+    @Override
+    public Iterator<String> iterator() {
+        StringTokenizer tokenizer = new StringTokenizer(documentText);
+        return new Iterator<String>() {
+            @Override
+            public boolean hasNext() {
+                return tokenizer.hasMoreTokens();
+            }
 
-			@Override
-			public String next() {
-				return st.nextToken();
-			}
-		};
-	}
+            @Override
+            public String next() {
+                return tokenizer.nextToken();
+            }
+        };
+    }
 
-	public static final void main(String[] args) throws IOException {
-		Document d = Document.readFromFile(new File("data/dracula.txt"));
-		for (String token : d) {
-			System.out.println(token);
-		}
-	}
-
+    public static void main(String[] args) throws IOException {
+        Document document = Document.loadFromFile(new File("data/dracula.txt"));
+        for (String token : document) {
+            System.out.println(token);
+        }
+    }
 }
