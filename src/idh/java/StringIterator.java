@@ -6,16 +6,24 @@ import java.util.StringTokenizer;
 public class StringIterator implements Iterator<String> {
 
 	String documentText;
+	StringTokenizer st = new StringTokenizer(documentText);
+	
+	public StringIterator(String documentText) {
+		this.documentText = documentText;
+		
+	}
 	
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		if(st.hasMoreTokens()) {
+		return true;
+		}
+		else return false;
 	}
 
 	@Override
 	public String next() {
-		// TODO Auto-generated method stub
+		st.nextToken();
 		return null;
 	}
 

@@ -3,12 +3,18 @@ package idh.java;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Document implements Iterable<String>{
-	String documentText;
+//Aufgabe 1. ziemlich unschön gelöst glaub ich.	
 	
+	String documentText;
+
+//hierüber wird bei Aufgabe 1 iteriert	
 	String[] documentTextTokens;
 
 	public static Document readFromFile(File f) throws IOException {
@@ -32,19 +38,34 @@ public class Document implements Iterable<String>{
 	public void setDocumentText(String documentText) {
 		this.documentText = documentText;
 	}
+
+//	definiert documentTextTokens für Aufgabe 1
+	public void setDocumentTextTokens(String[] documentTextTokens) {
+		this.documentTextTokens = documentTextTokens;
+	}
 	
 	public static final void main(String[] args) throws IOException {
+// dracula wird eingelesen und ist jetzt d.documentText		
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
+		
 		
 	}
 
+// wandelt documentText in Token-Array
+	public static String[] tokenizer(String documentText) {
+		String[] tokenArray = new String[0];
+		List<String> arrayList = new ArrayList<String>(Arrays.asList(tokenArray));
+		StringTokenizer st = new StringTokenizer(documentText);
+		while (st.hasMoreTokens()) {			
+			arrayList.add(st.nextToken());
+	     }	
+		tokenArray = arrayList.toArray(tokenArray);
+		return tokenArray;
+	}
+	
 	@Override
 	public Iterator<String> iterator() {
-//		StringTokenizer st = new StringTokenizer(documentText);
-//		while (st.hasMoreTokens()) {
-//			st.nextToken();
-//	     }
-		return new StringIterator();
+		return new TokenIterator(this.documentText);
 	}
 	
 }
