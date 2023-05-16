@@ -14,9 +14,6 @@ public class Document implements Iterable<String>{
 	
 	String documentText;
 
-//hierüber wird bei Aufgabe 1 iteriert	
-	String[] documentTextTokens;
-
 	public static Document readFromFile(File f) throws IOException {
 		FileReader fileReader = new FileReader(f);
 		int ch;
@@ -38,34 +35,20 @@ public class Document implements Iterable<String>{
 	public void setDocumentText(String documentText) {
 		this.documentText = documentText;
 	}
-
-//	definiert documentTextTokens für Aufgabe 1
-	public void setDocumentTextTokens(String[] documentTextTokens) {
-		this.documentTextTokens = documentTextTokens;
-	}
 	
 	public static final void main(String[] args) throws IOException {
 // dracula wird eingelesen und ist jetzt d.documentText		
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
 		
+		for(String documentText : d) {
+			System.out.println(documentText);
+		}
 		
-	}
-
-// wandelt documentText in Token-Array
-	public static String[] tokenizer(String documentText) {
-		String[] tokenArray = new String[0];
-		List<String> arrayList = new ArrayList<String>(Arrays.asList(tokenArray));
-		StringTokenizer st = new StringTokenizer(documentText);
-		while (st.hasMoreTokens()) {			
-			arrayList.add(st.nextToken());
-	     }	
-		tokenArray = arrayList.toArray(tokenArray);
-		return tokenArray;
 	}
 	
 	@Override
 	public Iterator<String> iterator() {
-		return new TokenIterator(this.documentText);
+		return new TokenIterator(documentText);
 	}
 	
 }

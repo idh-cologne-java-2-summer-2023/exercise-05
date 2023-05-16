@@ -28,8 +28,3 @@ public class StringIterator implements Iterator<String> {
 	}
 
 }
-
-//	StringTokenizer st = new StringTokenizer(documentText);
-//	while (st.hasMoreTokens()) {
-//		st.nextToken();
-//	 }
