@@ -8,7 +8,7 @@ import java.util.ListIterator;
 public class MyLinkedList<T> implements List<T> {
 	
 	//Die Aufgaben 1 und 3 waren bereits bearbeitet bis auf die 
-	//zweite addAll Methode (ab Zeile 126). Version mit Fehlermeldung (siehe Kommentar ab Zeile 126).
+	//zweite addAll Methode (ab Zeile 126). Version ohne Fehlermeldung (siehe Kommentar ab Zeile 136).
 
 	ListElement first;
 
@@ -123,8 +123,6 @@ public class MyLinkedList<T> implements List<T> {
 		return true;
 	}
 
-	//Die folgende Methode wirft eine NullPointer Exception,
-	//welche auf Zeile 138 verweist. Angeblich sei das currentElement null.
 	
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
@@ -135,7 +133,13 @@ public class MyLinkedList<T> implements List<T> {
 			//die folgende Schleife soll das currentElement 
 			//auf die Position des index setzen 
 			for(int i = 0; i<= index; i++) { 
+//Die folgende if-Bedingung überprüft, ob currentElement wirklich null ist - ist es nicht!
+//Daher ergibt die NullPointerException bei Zeile 141, 
+//die ohne diese Bedingung erscheinen würde (siehe 1. commit) keinen Sinn!
+				if(currentElement != null) {
+					System.out.println("nicht null");
 				currentElement = currentElement.next;
+				}
 			}
 			currentElement = newListElement; 
 		}
