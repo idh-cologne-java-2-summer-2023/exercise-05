@@ -17,9 +17,15 @@ public class MyLinkedList<T> implements List<T> {
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+	    int count = 0;
+	    ListElement current = first;
+	    while (current != null) {
+	        count++;
+	        current = current.next;
+	    }
+	    return count;
 	}
+
 
 	@Override
 	public boolean isEmpty() {
@@ -28,9 +34,16 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
-		return false;
+	    ListElement current = first;
+	    while (current != null) {
+	        if (current.value.equals(o)) {
+	            return true;
+	        }
+	        current = current.next;
+	    }
+	    return false;
 	}
+
 
 	@Override
 	public Iterator<T> iterator() {
@@ -54,9 +67,14 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+	    Object[] array = new Object[size()];
+	    int index = 0;
+	    for (T element : this) {
+	        array[index++] = element;
+	    }
+	    return array;
 	}
+
 
 	@Override
 	public <E> E[] toArray(E[] a) {
@@ -82,9 +100,28 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
-		return false;
+	    ListElement previous = null;
+	    ListElement current = first;
+
+	    while (current != null) {
+	        if (current.value.equals(o)) {
+	            if (previous == null) {
+	                // Removing the first element
+	                first = current.next;
+	            } else {
+	                // Removing an element in the middle or at the end
+	                previous.next = current.next;
+	            }
+	            return true;
+	        }
+
+	        previous = current;
+	        current = current.next;
+	    }
+
+	    return false;
 	}
+
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
@@ -103,9 +140,30 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
+	    if (index < 0 || index > size()) {
+	        throw new IndexOutOfBoundsException("Invalid index: " + index);
+	    }
+
+	    ListElement current = getElement(index);
+	    ListElement previous = (current != null) ? current : last();
+
+	    for (T element : c) {
+	        ListElement newElement = new ListElement(element);
+	        if (previous == null) {
+	            // Adding as the first element
+	            newElement.next = first;
+	            first = newElement;
+	        } else {
+	            // Inserting in the middle or at the end
+	            newElement.next = previous.next;
+	            previous.next = newElement;
+	        }
+	        previous = newElement;
+	    }
+
+	    return !c.isEmpty();
 	}
+
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
@@ -132,32 +190,102 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+	    ListElement current = getElement(index);
+	    
+	    if (current == null) {
+	        throw new IndexOutOfBoundsException("Invalid index: " + index);
+	    }
+	    
+	    T oldValue = current.value;
+	    current.value = element;
+	    
+	    return oldValue;
 	}
+
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+	    if (index < 0 || index > size()) {
+	        throw new IndexOutOfBoundsException("Invalid index: " + index);
+	    }
+
+	    ListElement current = getElement(index);
+	    ListElement previous = (current != null) ? current : last();
+
+	    ListElement newElement = new ListElement(element);
+	    if (previous == null) {
+	        // Adding as the first element
+	        newElement.next = first;
+	        first = newElement;
+	    } else {
+	        // Inserting in the middle or at the end
+	        newElement.next = previous.next;
+	        previous.next = newElement;
+	    }
 	}
+
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
-		return null;
+	    if (index < 0 || index >= size()) {
+	        throw new IndexOutOfBoundsException("Invalid index: " + index);
+	    }
+
+	    ListElement previous = null;
+	    ListElement current = first;
+
+	    // Traverse to the element at the specified index
+	    for (int i = 0; i < index; i++) {
+	        previous = current;
+	        current = current.next;
+	    }
+
+	    // Remove the element from the linked list
+	    if (previous == null) {
+	        // Removing the first element
+	        first = current.next;
+	    } else {
+	        // Removing an element in the middle or at the end
+	        previous.next = current.next;
+	    }
+
+	    return current.value;
 	}
+
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+	    int index = 0;
+	    ListElement current = first;
+
+	    while (current != null) {
+	        if (current.value.equals(o)) {
+	            return index;
+	        }
+	        current = current.next;
+	        index++;
+	    }
+
+	    return -1; // Object not found
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+	    int lastIndex = -1;
+	    int index = 0;
+	    ListElement current = first;
+
+	    while (current != null) {
+	        if (current.value.equals(o)) {
+	            lastIndex = index;
+	        }
+	        current = current.next;
+	        index++;
+	    }
+
+	    return lastIndex;
 	}
+
 
 	@Override
 	public ListIterator<T> listIterator() {
