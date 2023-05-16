@@ -32,3 +32,4 @@ public class SkipIterator<T> implements Iterator<T> {
 }
 }
 
+//fertig
