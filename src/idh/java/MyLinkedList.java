@@ -10,28 +10,54 @@ public class MyLinkedList<T> implements List<T> {
 
 	/**
 	 * We only need to store the very first element of our list, 
-	 * because it will now whether there is a next element.
+	 * because it will know whether there is a next element.
 	 */
 	ListElement first;
 	
-	
+	/**
+	 * Returns the number of elements in this list.
+	 */
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int counter = 0;
+		if (isEmpty()) 
+			return 0;
+		ListElement current = first;
+		while(current != null) {
+			counter++;
+			current = current.next;
+		}
+		return counter;
 	}
 
-	@Override
+	/**
+	 * Returns true if this list contains no elements.
+	 */
+	@Override 
 	public boolean isEmpty() {
 		return first == null;
 	}
 
+	/**
+	 * Returns true if this list contains the specified element. 
+	 */
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		if (isEmpty()) 
+			return false;
+		ListElement current = first;
+		while(current != null) {
+			if(current == o) {
+				return true;
+			}
+			current = current.next;
+		}
 		return false;
 	}
 
+	/**
+	 * Returns an iterator over the elements in this list in proper sequence.
+	 */
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<T>() {
@@ -52,10 +78,21 @@ public class MyLinkedList<T> implements List<T> {
 		};
 	}
 
+	/**
+	 * Returns an array containing all of the elements in this list in proper sequence (From first to last element).
+	 * The returned array will be safe in that no references to it are maintained by this list
+	 */
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		Object[] arr = new Object[size()];
+		ListElement current = first;
+		int counter = 0;
+		while(current != null) {
+			arr[counter] = current;
+			counter++;
+			current = current.next;
+		}
+		return arr;
 	}
 
 	@Override
@@ -70,6 +107,9 @@ public class MyLinkedList<T> implements List<T> {
 		return a;
 	}
 
+	/**
+	 * Appends the specified element to the end of this list.
+	 */
 	@Override
 	public boolean add(T e) {
 		ListElement newListElement = new ListElement(e);
@@ -80,12 +120,31 @@ public class MyLinkedList<T> implements List<T> {
 		return true;
 	}
 
+	/**
+	 * Removes the first occurence of the specified element from this list, if it is present.
+	 * If this list does not contain the element, it is unchanged.
+	 * Returns true if this list contained the specified element.
+	 */
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		if(first == null) 
+			return false;
+		ListElement current = first;
+		ListElement prev = first;
+		while(current != null) {
+			if(current == o) {
+				prev.next = current.next;
+				return true;
+			}
+			prev = current;
+			current = current.next;
+		}
 		return false;
 	}
 
+	/**
+	 * Returns true if this list contains all of the elements of the specified collection
+	 */
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		for (Object o : c)
@@ -94,6 +153,9 @@ public class MyLinkedList<T> implements List<T> {
 		return true;
 	}
 
+	/**
+	 * Appends all of the elements in the specified collection to the end of the list. 
+	 */
 	@Override
 	public boolean addAll(Collection<? extends T> c) {
 		for (T t : c) 
@@ -101,12 +163,39 @@ public class MyLinkedList<T> implements List<T> {
 		return true;
 	}
 
+	/**
+	 * Inserts all of the elements in the specified collection into this list at the specified position.
+	 * Shifts the element currently at that position and any subsequent elements to the right.
+	 */
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
+		if(first == null) 
+			for (T t : c) 
+				this.add(t);
+		ListElement current = first;
+		ListElement prev = first;
+		int counter = 0;
+		
+		while(current != null) {
+			if(index == counter) {
+				for(T t: c) {
+					ListElement newListElement = new ListElement(t);
+					prev.next = newListElement;						
+				}
+				index += c.size();
+				getElement(index-1).next = current;
+				return true;
+			}
+			counter++;
+			prev = current;
+			current = current.next;
+		}
 		return false;
 	}
 
+	/**
+	 * Removes from this list all of its elements that are contained in the specified collection
+	 */
 	@Override
 	public boolean removeAll(Collection<?> c) {
 		boolean r = true;
@@ -115,48 +204,136 @@ public class MyLinkedList<T> implements List<T> {
 		return r;
 	}
 
+	/**
+	 * Retains only the elements in this list that are contained in the specified collection.
+	 */
 	@Override
 	public boolean retainAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Removes all of the elements from this list
+	 */
 	@Override
 	public void clear() {
 		first = null;
 	}
 
+	/**
+	 * Returns the element at the specified position in this list.
+	 */
 	@Override
 	public T get(int index) {
 		return getElement(index).value;
 	}
 
+	/**
+	 * Replaces the element at the specified position in this list with the specified element
+	 */
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+		ListElement current = first;
+		ListElement prev = first;
+		int counter = 0;
+		while(current != null) {
+			if(index == counter) {
+				ListElement newListElement = new ListElement(element);
+				prev.next = newListElement;	
+				newListElement.next = current.next;
+				return element;
+			}
+			counter++;
+			prev = current;
+			current = current.next;
+		}
+		return element;
 	}
 
+	/**
+	 * Inserts the specified element at the specified position in this list
+	 * Shifts the element currently at that position (if any) and any subsequent elements to the right
+	 */
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		ListElement current = first;
+		ListElement prev = first;
+		int counter = 0;
+		
+		while(current != null) {
+			if(index == counter) {
+					ListElement newListElement = new ListElement(element);
+					prev.next = newListElement;	
+					newListElement.next = current;
+			}
+			counter++;
+			prev = current;
+			current = current.next;
+		}
 	}
-
+	
+	/**
+	 * Removes the element at the specified position in this list
+	 * Shifts any subsequent elements to the left (subtracts one from their indices). Returns the element that was removed from the list.
+	 */
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
+		ListElement current = first;
+		ListElement prev = first;
+		int counter = 0;
+		
+		while(current != null) {
+			if(index == counter) {
+					prev.next = current.next;
+					return current.value;
+			}
+			counter++;
+			prev = current;
+			current = current.next;
+		}
 		return null;
 	}
 
+	/**
+	 * Returns the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element. 
+	 */
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		ListElement current = first;
+		int counter = 0;
+		
+		while(current != null) {
+			if(o == current) {	
+				return counter;
+			}
+			counter++;
+			current = current.next;
+		}
+		return -1;
 	}
 
+	/**
+	 * Returns the index of the last occurrence of the specified element in this list, or -1 if this list does not contain the element.
+	 */
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		ListElement current = first;
+		int counter = 0;
+		int temp = 0;
+		
+		while(current != null) {
+			if(o == current) {	
+				temp = counter;
+			}
+			counter++;
+			current = current.next;
+		}
+		
+		if(temp >= 0) {
+			return temp;
+		} else {
+			return -1;
+		}
 	}
 
 	@Override
@@ -275,9 +452,11 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
+		ll.add(1, "Blurgh");
 		ll.get(0);
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		
 	}
 }
