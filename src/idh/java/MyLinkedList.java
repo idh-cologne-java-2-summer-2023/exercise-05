@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 
-public class MyLinkedList<T> implements List<T> {
+public class MyLinkedList<T> implements List<T>,  Iterable<T>{
 
 	/**
 	 * We only need to store the very first element of our list, 
@@ -14,10 +14,17 @@ public class MyLinkedList<T> implements List<T> {
 	 */
 	ListElement first;
 	
-	
 	@Override
 	public int size() {
-		// TODO Implement!
+		int size = 1;
+		if(first != null) {
+			ListElement bruh = first;
+			while(bruh.next != null) {
+				size++;
+				bruh = bruh.next;
+			}
+			return size;
+		}
 		return 0;
 	}
 
@@ -28,7 +35,14 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+	//	ListIterator<T> listIterator = listIterator();
+		ListElement bruh = first;
+		do {
+			if(bruh.value.equals(o)) {
+				return true;
+			}
+			bruh = bruh.next; 
+		} while(bruh != null);
 		return false;
 	}
 
@@ -54,8 +68,13 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		Object[] bruh = new Object[size()];
+		ListElement bruhh = first;
+		bruh[0] = bruhh;
+		for(int i = 1; i < size(); i++) {
+			bruh[i] = bruhh.next;
+		}
+		return bruh;
 	}
 
 	@Override
@@ -81,9 +100,30 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public boolean remove(Object o) {
+	public boolean remove(Object o) { //nicht funktional
 		// TODO: Implement
-		return false;
+		ListElement bruh = first;
+		if(first != null) {
+			while(bruh != o) {
+				bruh = bruh.next;
+			}
+		}
+		else
+			return false;
+		if(o == last()) {
+			getElement(indexOf(o) - 1).next = null;
+			return true;
+		}
+		else if (bruh == first) {
+			first = getElement(indexOf(o)).next;
+			return true;
+		}
+		else if (bruh == o){
+			getElement(indexOf(o) - 1).next = getElement(indexOf(o)).next;
+			return true;
+		}
+		else 
+			return false;
 	}
 
 	@Override
@@ -142,15 +182,46 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public T remove(int index) {
+	public T remove(int index) { //nicht funktional
 		// TODO: Implement
-		return null;
+		Object o = getElement(index);
+		ListElement bruh = first;
+		if(first != null) {
+			while(bruh != o) {
+				bruh = bruh.next;
+			}
+		}
+		else
+			return null;
+		if(o == last()) {
+			getElement(indexOf(o) - 1).next = null;
+			return (T) o;
+		}
+		else if (bruh == first) {
+			first = getElement(indexOf(o)).next;
+			return (T) o;
+		}
+		else if (bruh == o){
+			getElement(indexOf(o) - 1).next = getElement(indexOf(o)).next;
+			return (T) o;
+		}
+		else 
+			return null;
 	}
 
 	@Override
 	public int indexOf(Object o) {
 		// TODO: Implement
-		return 0;
+		int counter = 0;
+		if(first != null) {
+			ListElement bruh = first;
+			counter++;
+			while(bruh != null && bruh != o) {
+				counter++;
+				bruh = bruh.next;
+			}
+		}
+		return counter;
 	}
 
 	@Override
@@ -273,9 +344,14 @@ public class MyLinkedList<T> implements List<T> {
 
 	public static void main(String[] args) {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
+	//	System.out.println(ll.indexOf(ll.getElement((1))));
 		ll.add("Hallo");
 		ll.add("Welt");
-		ll.get(0);
+	//	ll.get(0);
+		for (String s : ll) {
+			System.out.println(s);
+		}
+		ll.remove(1);
 		for (String s : ll) {
 			System.out.println(s);
 		}
