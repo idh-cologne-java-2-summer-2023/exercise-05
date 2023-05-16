@@ -1,10 +1,13 @@
 package idh.java;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+
+//toArray and LastIndexof Method not working because of 
 
 public class MyLinkedList<T> implements List<T> {
 
@@ -17,8 +20,12 @@ public class MyLinkedList<T> implements List<T> {
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int length = 1;
+        while(first.next != null) {
+        	length++;
+        	first = first.next;
+        }
+		return length;
 	}
 
 	@Override
@@ -28,9 +35,16 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		while(first.next != null) {
+			if(first.value.equals(o)) {
+				return true;
+			}else {
+				first = first.next;
+			}
+		}
 		return false;
 	}
+	
 
 	@Override
 	public Iterator<T> iterator() {
@@ -54,8 +68,18 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		int size = this.size();
+		
+		Object[] array = new Object[size];
+		
+		ListIterator<T> li = this.listIterator();
+		int i = 0;
+		while(li.hasNext()) {
+			array[i] = li.next();
+			i++;
+		}
+		
+		return array;
 	}
 
 	@Override
@@ -82,8 +106,17 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		while(first.next != null) {	
+			if(first.value.equals(o)) {
+				first.value = null;
+				return true;
+			}else {
+				first = first.next;
+			}
+		}
+		System.out.println("Kein Objekt gefunden.");
 		return false;
+		
 	}
 
 	@Override
@@ -103,8 +136,13 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
+		boolean istrue = false;
+		for (T t : c) {
+			this.set(index, t);
+		index++;
+		istrue = true;
+	}
+	return istrue;
 	}
 
 	@Override
@@ -132,33 +170,85 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
+		if(get(index) != null) {
+		T previous = get(index);
+		add(index, element);
+		return previous;
+		}else {
+		add(index, element);
 		return null;
+		
+		}
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
-	}
+		ListElement previous = this.getElement(index-1);
+		ListElement currentelement = this.getElement(index);
+		ListElement newelement = new ListElement(element);
 
+		if(previous == null) {
+			this.first.value = newelement.value;
+			newelement.next.value = currentelement.value;
+		}else {
+			previous.next.value = newelement.value;
+			newelement.next.value = currentelement.value;
+		}
+	          
+		}		
+	
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
-		return null;
+		ListElement previous = this.getElement(index-1);
+		ListElement deletedelement = this.getElement(index);
+		ListElement nextelement = this.getElement(index+1);
+
+		if(previous == null) {
+			this.first = nextelement;
+		}else {
+			previous.next = nextelement;
+		}
+		return deletedelement.value;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int index = 0;
+		while(first.next != null) {	
+			if(first.value.equals(o)) {
+				return index;
+			}else {
+				first = first.next;
+				index++;
+			}
+		}
+		if(index == this.size()) {
+			return -1;
+		}
+		return index;
+		
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
-	}
-
+//        for(T t : this) {
+//        	if(t == o) {
+//        		
+//        	}
+		
+		int s = this.size();
+		int i = s;
+		while(s > 0) {
+			if(get(i) == o) {
+				return i;
+			}else {
+				i--;
+			}
+        }
+		return -1;
+        		
+        		
+}
 	@Override
 	public ListIterator<T> listIterator() {
 		return new ListIterator<T>() {
@@ -275,9 +365,12 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
-		ll.get(0);
+		ll.add("Universum");
+
+        
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		
 	}
 }
