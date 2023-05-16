@@ -125,10 +125,13 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
-	}
+    public boolean addAll(int index, Collection<? extends T> c) {
+        for (T t : c) {
+            this.add(index, t);
+            index++;
+        }
+        return true;
+    }
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
