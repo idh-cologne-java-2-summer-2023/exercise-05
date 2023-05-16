@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class MyLinkedList<T> implements List<T> {
+	
+	//Die Aufgaben 1 und 3 waren bereits bearbeitet bis auf die 
+	//zweite addAll Methode (ab Zeile 126). Version mit Fehlermeldung (siehe Kommentar ab Zeile 126).
 
-	/**
-	 * We only need to store the very first element of our list,
-	 * because it will now whether there is a next element.
-	 */
 	ListElement first;
 
 
@@ -124,10 +123,25 @@ public class MyLinkedList<T> implements List<T> {
 		return true;
 	}
 
+	//Die folgende Methode wirft eine NullPointer Exception,
+	//welche auf Zeile 138 verweist. Angeblich sei das currentElement null.
+	
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
+		if(first != null) {
+		ListElement currentElement = first; 
+		for (T t : c) { 
+			ListElement newListElement = new ListElement(t);
+			//die folgende Schleife soll das currentElement 
+			//auf die Position des index setzen 
+			for(int i = 0; i<= index; i++) { 
+				currentElement = currentElement.next;
+			}
+			currentElement = newListElement; 
+		}
+		return true;
+		}
+		else return false;
 	}
 
 	@Override
@@ -325,7 +339,15 @@ public class MyLinkedList<T> implements List<T> {
 		ll.add("Welt");
 		ll.get(0);
 		for (String s : ll) {
-			System.out.println(s);
+			System.out.println(s); 
+		}
+		
+	    MyLinkedList<String> ll2 = new MyLinkedList<String>();
+		ll2.add("wie");
+		ll2.add("geht's");
+		ll.addAll(1,ll2);
+		for (String s : ll) {
+			System.out.println(s); 
 		}
 	}
 }
