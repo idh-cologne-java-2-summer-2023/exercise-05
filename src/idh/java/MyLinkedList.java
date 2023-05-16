@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
+// Leider war die main zum Zeitpunkt des importierens in mein Eclipse gemerged und zum großteil fertig.
+// Ich hab versucht, den Code nachzuvollziehen und die addAll Methode zu implementieren, dabei hab es allerdings
+// Probleme. (Siehe ab Zeile 130)
 public class MyLinkedList<T> implements List<T> {
 
 	/**
@@ -62,7 +64,7 @@ public class MyLinkedList<T> implements List<T> {
 	public Object[] toArray() {
 		Object[] array = new Object[size()];
 		int i = 0;
-		for (T t : this) {
+		for (T t : this) {             // this = mach das mit deinem eigenen Dingens
 			array[i++] = t;
 		}
 		return array;
@@ -126,9 +128,25 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
-	}
+        if(first != null) {
+        ListElement currentElement = first;
+        for (T t : c) {
+            ListElement newListElement = new ListElement(t);
+            for(int i = 0; i<= index; i++) {
+                if(currentElement != null) {
+                System.out.println("nicht null");
+                }
+                currentElement = currentElement.next;
+            }
+            currentElement = newListElement;
+            System.out.println("nicht null");
+        }
+        return true;
+        }
+        else return false;
+    }
+	// Ich habe versucht mit Fearless Faultier zusammen eine Lösung zu finden, doch kriegen wir hier eine Nullpointer Exception, die wir nicht gelöst kriegen.
+	// Die for-Schleife kann sich manchmal nicht entscheiden, ob es nun Null ist, oder nicht. Ein Mysterium.
 
 	@Override
 	public boolean removeAll(Collection<?> c) {

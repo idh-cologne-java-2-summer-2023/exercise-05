@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+
 public class Document implements Iterable<String> {
 	String documentText;
 
