@@ -47,15 +47,17 @@ public class Document implements Iterable<Object>{
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'iterator'");
 
-		//What is the f***ing variable with the text in it?!
+	
 		//Why is this unreacheable code?!
+		//I know why now, tried simply putting it into the Document Method, didn´t change a thing
 		StringTokenizer st = new StringTokenizer(  documentText , ",");
 		ArrayList <String> tokens = new ArrayList <String> ();
 		Iterator<String> it = tokens.iterator();
 		while (it.hasNext()) {
 			tokens.add (st.nextToken());
 			int tokenAmount = st.countTokens();
-		//	System.out.println(st.nextToken());
+			System.out.println(st.nextToken());
+			System.out.println(tokenAmount);
 	
 	        
 		}

@@ -28,9 +28,10 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		if (first != Object o){
 		return false;
-	}
+		}
+	}//the point is to find out if the list contains the Object o, right?
 
 	@Override
 	public Iterator<T> iterator() {
@@ -54,7 +55,9 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
+		Object[] LE = [MyLinkedList];
 		// TODO Implement!
+		//On it                      <-------------------under Construction-----------
 		return null;
 	}
 
@@ -83,6 +86,8 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO: Implement
+		//on it
+		o = false;
 		return false;
 	}
 
