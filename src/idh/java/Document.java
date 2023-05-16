@@ -3,6 +3,7 @@ package idh.java;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,14 +46,17 @@ public class Document implements Iterable<Object>{
 		throw new UnsupportedOperationException("Unimplemented method 'iterator'");
 
 		//What is the f***ing variable with the text in it?!
-		StringTokenizer st = new StringTokenizer(d);
+		getDocumentText();
+		StringTokenizer st = new StringTokenizer( documentText , ",");
+		List <String> tokens = new LinkedList <String> ();
+		Iterator<String> it = tokens.iterator();
 		while (st.hasMoreTokens()) {
-			System.out.println(st.nextToken());
-	 List <String> ll = new LinkedList <String> (st.nextToken());//what do you MEAN  "constructor undefined?!"
-
-		
-			Iterator<String> it = ll.iterator();
-	}
+			tokens.add (st.nextToken());
+			int tokenAmount = st.countTokens();
+		//	System.out.println(st.nextToken());
+	
+	        
+		}
 	
 }
 }
