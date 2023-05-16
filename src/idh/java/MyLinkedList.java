@@ -13,7 +13,7 @@ public class MyLinkedList<T> implements List<T> {
 	 */
 	ListElement first;
 
-
+//
 	@Override
 	public int size() {
 		int size = 0;
