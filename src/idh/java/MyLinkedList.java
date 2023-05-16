@@ -10,7 +10,7 @@ public class MyLinkedList<T> implements List<T> {
 
 	/**
 	 * We only need to store the very first element of our list, 
-	 * because it will now whether there is a next element.
+	 * because it will know whether there is a next element.
 	 */
 	ListElement first;
 	
@@ -96,7 +96,18 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO: Implement
-		return false;
+		boolean r = false;
+		ListElement current = first;
+		ListElement previous = null;
+		while(current.next != null) {
+			if(current.value == o) {
+				previous.next = current.next;
+				return r = true;
+			}
+		previous = current;
+		current = current.next;
+		}
+		return r;
 	}
 
 	@Override
