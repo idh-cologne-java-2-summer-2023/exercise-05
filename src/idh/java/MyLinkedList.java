@@ -5,8 +5,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
-//https://docs.oracle.com/javase/8/docs/api/java/util/List.html
+/*
+ * 
+ * Die TODO Markierungen wurden absichtlich drinnen gelassen.
+ * 
+ */
 
 public class MyLinkedList<T> implements List<T> {
 
