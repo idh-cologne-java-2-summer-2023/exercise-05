@@ -10,16 +10,13 @@ public class MyLinkedList<T> implements List<T> {
 
 	/**
 	 * We only need to store the very first element of our list, 
-	 * because it will now whether there is a next element.
+	 * because it will know whether there is a next element.
 	 */
 	ListElement first;
 	
-	
-	@Override
-	public int size() {
-		// TODO Implement!
-		return 0;
-	}
+//Werde ich noch einmal machen. Die einzelnen Methoden zu implementieren fand ich noch sehr schwer auch, wenn ich das Prinzip von LL verstehe.
+//Habe das noch nie gemacht und die Dokumentation hat nicht weiter geholfen (bezüglich Syntax und Logik).
+			
 
 	@Override
 	public boolean isEmpty() {
@@ -275,9 +272,18 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
-		ll.get(0);
+		ll.add("Wie");
+		ll.add("geht's");
+		ll.add("?");
 		for (String s : ll) {
-			System.out.println(s);
+			System.out.println(ll);
 		}
+	}
+	
+
+
+	@Override
+	public int size() {
+		return 0;
 	}
 }
