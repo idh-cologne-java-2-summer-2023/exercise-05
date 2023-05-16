@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.lang.model.element.Element;
+
 
 public class MyLinkedList<T> implements List<T> {
 
@@ -66,6 +68,7 @@ public class MyLinkedList<T> implements List<T> {
 	      
 		// TODO Implement!
 		//On it                      <-------------------under Construction-----------
+		// no clue!
 		
 		return null;
 	}
@@ -98,7 +101,7 @@ public class MyLinkedList<T> implements List<T> {
 		//done (?)
 		if (this == o){
 		o = false;
-		index = index -1;
+		
 		return true;
 		}
 		else {
@@ -158,32 +161,65 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
+		if (this.equals(index)){
+			first.equals(element);
+		}
+	
 		return null;
 	}
 
 	@Override
 	public void add(int index, T element) {
 		// TODO: Implement
+		//on it
+		first = new ListElement(element);
+		index = index + 1 ;
+		//done
+		
 	}
 
 	@Override
 	public T remove(int index) {
 		// TODO: Implement
+		// on it
+		index = index -1;
+		//this is supposed to set back the index to account for a removed object?
 		return null;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
-	}
+		index = 0;
+	    while (this != o){
+			index ++;}
+			if (this == o){
+				return index;
+			}
+			else {
+				return -1;
+			}
+
+		}
+		
+	
 
 	@Override
 	public int lastIndexOf(Object o) {
 		// TODO: Implement
-		return 0;
-	}
+		//on it
+		index = this.size();
+		while (this != o){
+			index --;
+		}
+		if (this == o){
+			return index;
+		}
+		else {
+			return -1;
+		}
+		}
+		
+	
 
 	@Override
 	public ListIterator<T> listIterator() {
