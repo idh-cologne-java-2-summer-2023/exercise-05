@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.LinkedList;
 
 
 public class MyLinkedList<T> implements List<T> {
@@ -17,8 +18,11 @@ public class MyLinkedList<T> implements List<T> {
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int counter = 0;
+		for(T element : this) {
+			counter++;
+		}
+		return counter;
 	}
 
 	@Override
@@ -28,7 +32,10 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		for (T element : this) {
+			if(element.equals(o))
+				return true;
+		}
 		return false;
 	}
 
@@ -54,8 +61,11 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		Object[] arr = new Object[this.size()];
+		for (T element : this) {
+			arr[this.indexOf(element)] = element;
+		}
+		return arr;
 	}
 
 	@Override
@@ -82,8 +92,12 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
-		return false;
+		int cIndex = indexOf(o);
+		if(cIndex == -1)
+			return false;
+		
+		getElement(cIndex - 1).next = getElement(cIndex).next;
+		return true;
 	}
 
 	@Override
@@ -103,8 +117,15 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
+		if(c.isEmpty() || index < 0 || index > this.size())
+			return false;
+		
+		int counter = 0;
+		for (T t : c) {
+			this.add(counter+index, t);
+			counter++;
+		}
+		return true;
 	}
 
 	@Override
@@ -132,31 +153,57 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+		T temp = getElement(index).value;
+		getElement(index).value = element;
+		return temp;
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		ListElement addedE = new ListElement(element);
+		if(index == 0) {
+			ListElement temp = first;
+			first = addedE;
+			first.next = temp;
+		}
+		else {
+			ListElement temp = getElement(index).next;
+			getElement(index - 1).next = addedE;
+			addedE.next = temp;
+		}
+		
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
-		return null;
+		T temp = getElement(index).value;
+		getElement(index -1).next = getElement(index).next;
+		return temp;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int counter = 0;
+		for (T element : this) {
+			if(element.equals(o))
+				return counter;
+			
+			counter++;
+		}
+		return -1;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int counter = 0;
+		int res = -1;
+		for (T element : this) {
+			if(element.equals(o))
+				res = counter;
+			
+			counter++;
+		}
+		return res;
 	}
 
 	@Override
@@ -275,6 +322,7 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
+		ll.addAll(0,ll);
 		ll.get(0);
 		for (String s : ll) {
 			System.out.println(s);
