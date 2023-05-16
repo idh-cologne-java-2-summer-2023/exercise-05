@@ -19,14 +19,11 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public int size() {
 		// TODO Implement!
-		// on it!         ----------------------WIP
-		while (true){
-			
-			when (add(T) == true);{
-                 index ++;
-			}
-		}
-		return 0;
+		// on it!        
+	 // int  size = (Array).length; //<- gotta figure out what that array is called
+	 // I kind of doubt that´s what he meant....but it works!
+	 return this.size();
+	 //done
 	}
 
 	@Override
@@ -66,11 +63,10 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		if(a.length < size()){
-			a = (E[]) new Object[size()];
-		}
+	      
 		// TODO Implement!
 		//On it                      <-------------------under Construction-----------
+		
 		return null;
 	}
 
@@ -128,9 +124,14 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
 		// TODO Implement!
-		// on it
+		// on it                        
+		if (this.equals(index)){
+			for (T t: c)
+			this.add(t);
+		}                  
 		return false;
 	}
+	//done
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
