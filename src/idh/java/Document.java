@@ -31,26 +31,41 @@ public class Document implements Iterable<String> {
 		this.documentText = documentText;
 	}
 
-	@Override
 	public Iterator<String> iterator() {
-		StringTokenizer st = new StringTokenizer(documentText);
-		return new Iterator<String>() {
+		return new TokenIterator(); 
+	}
+			
+		private class TokenIterator implements Iterator<String> {
+			StringTokenizer tokenizer;
+			
+			public TokenIterator() {
+				tokenizer = new StringTokenizer(documentText);
+		
+		}
 			@Override
 			public boolean hasNext() {
-				return st.hasMoreTokens();
+				return tokenizer.hasMoreTokens();
 			}
 
 			@Override
 			public String next() {
-				return st.nextToken();
+				return tokenizer.nextToken();
 			}
 		};
-	}
+	
 
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
 		for (String token : d) {
 			System.out.println(token);
+
+			//Abrufen des Iterator mit while-Schleife
+		Iterator<String> iterator =d.iterator();
+			while(iterator.hasNext()) {
+				String tokenizer = iterator.next();
+				System.out.println(tokenizer);
+			}
+		
 		}
 	}
 

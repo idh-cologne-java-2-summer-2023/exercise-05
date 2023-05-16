@@ -16,11 +16,13 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public int size() {
-		int size = 0;
-		for (@SuppressWarnings("unused") T t : this) {
-			size++;
+		int pointer = 0;
+		ListElement current = first;
+		while (current != null) {
+			pointer++;
+			current = current.next;
 		}
-		return size;
+		return pointer;
 	}
 
 	@Override
@@ -30,11 +32,15 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		for (T t : this) {
-			if (t.equals(o)) {
+		ListElement current = first;
+
+		while (current != null) {
+			if (o == null ? current.value == null : o.equals(current.value)) {
 				return true;
 			}
-		}
+			current = current.next;
+
+			}
 		return false;
 	}
 
@@ -62,9 +68,13 @@ public class MyLinkedList<T> implements List<T> {
 	public Object[] toArray() {
 		Object[] array = new Object[size()];
 		int i = 0;
-		for (T t : this) {
-			array[i++] = t;
+		ListElement current = first;
+		
+		while (current != null) {
+			array[i++] = current.value;
+			current = current.next;
 		}
+	
 		return array;
 	}
 
@@ -126,8 +136,34 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
+		if (index < 0 || index > size()) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		boolean modified = false;
+		ListElement previous = null;
+		ListElement current = first;
+
+		for (T element : c) {
+			ListElement newListElement = new ListElement(element);
+
+			if (previous == null) {
+				// Element wird an den Anfang der Liste eingefügt
+				newListElement.next = current;
+				first = newListElement;
+			} else {
+				// Element wird in die angegebene Position eingefügt
+				newListElement.next = current;
+				previous.next = newListElement;
+			}
+
+			previous = newListElement;
+			modified = true;
+		}
+
+		return modified;
+
+		
 	}
 
 	@Override
@@ -155,9 +191,9 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		ListElement e = getElement(index);
-		T oldValue = e.value;
-		e.value = element;
+		ListElement current = getElement(index);
+		T oldValue = current.value;
+		current.value = element;
 		return oldValue;
 	}
 
@@ -321,8 +357,8 @@ public class MyLinkedList<T> implements List<T> {
 
 	public static void main(String[] args) {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
-		ll.add("Hallo");
-		ll.add("Welt");
+		ll.add("Hello");
+		ll.add("was geht");
 		ll.get(0);
 		for (String s : ll) {
 			System.out.println(s);
