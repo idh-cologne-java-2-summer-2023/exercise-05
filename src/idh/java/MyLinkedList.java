@@ -117,8 +117,12 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		if(c.isEmpty() || index < 0 || index > this.size())
+		if(c.isEmpty() || index < 0)
 			return false;
+		else if(index > this.size()) {
+			this.addAll(c);
+			return true;
+		}
 		
 		int counter = 0;
 		for (T t : c) {
@@ -166,10 +170,13 @@ public class MyLinkedList<T> implements List<T> {
 			first = addedE;
 			first.next = temp;
 		}
-		else {
-			ListElement temp = getElement(index).next;
+		else if(index>0 && index<this.size()){
+			ListElement temp = getElement(index);
 			getElement(index - 1).next = addedE;
 			addedE.next = temp;
+		}
+		else {
+			this.add(element);
 		}
 		
 	}
@@ -320,9 +327,12 @@ public class MyLinkedList<T> implements List<T> {
 
 	public static void main(String[] args) {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
-		ll.add("Hallo");
-		ll.add("Welt");
-		ll.addAll(0,ll);
+		MyLinkedList<String> ll2 = new MyLinkedList<String>();
+
+		ll2.add("Hallo");
+		ll2.add("Welt");
+		ll2.add("testd");
+		ll.addAll(6,ll2);
 		ll.get(0);
 		for (String s : ll) {
 			System.out.println(s);
