@@ -7,7 +7,10 @@ import java.util.ListIterator;
 
 
 public class MyLinkedList<T> implements List<T> {
-
+	
+	// hab zu lange für aufgabe 1 gebraucht, hier fehlt einiges. Nur size(), contains(), toArray()
+	// fertig implementiert.
+	
 	/**
 	 * We only need to store the very first element of our list, 
 	 * because it will now whether there is a next element.
@@ -17,8 +20,11 @@ public class MyLinkedList<T> implements List<T> {
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int size = 0;
+		for(T t : this) {
+			size++;
+		}
+		return size;
 	}
 
 	@Override
@@ -28,8 +34,11 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
-		return false;
+		for(T t : this) {
+			if(t == o) {
+				return true;
+			}
+		} return false; 
 	}
 
 	@Override
@@ -54,8 +63,12 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		Object[] objectArray = new Object[this.size()];
+		int counter = 0;
+		for(T t : this) {
+			objectArray[counter] = t;
+		}
+		return objectArray;
 	}
 
 	@Override
@@ -82,7 +95,10 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		if(contains(o) ) {
+			//fehlt! 
+			return true;
+		}
 		return false;
 	}
 
@@ -275,9 +291,23 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
+		ll.add("wie");
+		ll.add("geht's");
+		ll.add("denn");
+		ll.add("so?");
+
 		ll.get(0);
+		
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		
+		System.out.println(ll.size());
+		System.out.println(ll.contains("Hallo"));
+		System.out.println(ll.contains("Tschüss"));
+		Object[] llArray =  ll.toArray();
+		System.out.println(llArray.length);
+
+
 	}
 }
