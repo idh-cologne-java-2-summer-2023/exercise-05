@@ -17,12 +17,8 @@ public class MyLinkedList<T> implements List<T> {
 	
 	@Override
 	public int size() {
-		int counter = 0;
-		while (this.iterator().hasNext() ) {
-			counter++;
-		}
-		
-		return counter;
+		// TODO Implement!
+		return 0;
 	}
 
 	@Override
@@ -32,13 +28,8 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		while (this.iterator().hasNext()) {
-			if (this.iterator().next() == o) {
-				return true;
-			}
-		}
+		// TODO Implement!
 		return false;
-			
 	}
 
 	@Override
@@ -63,14 +54,8 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		Object[] result = new Object[this.size()];
-		int counter = 0;
-		
-		while (this.iterator().hasNext()) {
-			result[counter++] = this.iterator().next();
-			counter++;
-		}
-		return result;
+		// TODO Implement!
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -98,18 +83,7 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		ListElement current = first;
-		ListElement previous = null;
-		
-		while (current.next != null) {
-			if (this.contains(o)) {
-				previous.next = current.next;
-				return true;
-			}
-			previous = current;
-			current = current.next;
-		}
-		
+		// TODO: Implement
 		return false;
 	}
 
@@ -159,16 +133,8 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		int counter = 1;
-		T e = null;
-		while (this.iterator().hasNext()) {
-			if (counter == index) {
-				e = this.iterator().next();
-				e = element;
-			}
-			counter++;
-		}
-		return e;
+		// TODO: Implement
+		return null;
 	}
 
 	@Override
