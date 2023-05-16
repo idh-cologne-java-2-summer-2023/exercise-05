@@ -18,7 +18,13 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public int size() {
 		// TODO Implement!
-		return 0;
+		int count = 0;
+        ListElement current = first;
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
 	}
 
 	@Override
@@ -29,6 +35,13 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean contains(Object o) {
 		// TODO Implement!
+		 ListElement current = first;
+	        while (current != null) {
+	            if (o == null ? current.value == null : o.equals(current.value)) {
+	                return true;
+	            }
+	            current = current.next;
+	        }
 		return false;
 	}
 
@@ -55,7 +68,12 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public Object[] toArray() {
 		// TODO Implement!
-		return null;
+		Object[] array = new Object[size];
+        int i = 0;
+        for (T element : this) {
+            array[i++] = element;
+        }
+        return array;
 	}
 
 	@Override
@@ -83,6 +101,23 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO: Implement
+		if (first == null) {
+            return false;
+        }
+        if (o == null ? first.value == null : o.equals(first.value)) {
+            first = first.next;
+            size--;
+            return true;
+        }
+        ListElement current = first;
+        while (current.next != null) {
+            if (o == null ? current.next.value == null : o.equals(current.next.value)) {
+                current.next = current.next.next;
+                size--;
+                return true;
+            }
+            current = current.next;
+        }
 		return false;
 	}
 
@@ -133,30 +168,84 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public T set(int index, T element) {
 		// TODO: Implement
-		return null;
-	}
+		 if (index < 0 || index >= size()) {
+	            throw new IndexOutOfBoundsException();
+	        }
+	        ListElement current = getElement(index);
+	        T oldValue = current.value;
+	        current.value = element;
+	        return oldValue;
+	    }
 
 	@Override
 	public void add(int index, T element) {
 		// TODO: Implement
+		if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (index == size()) {
+            add(element);
+        } else {
+            ListElement newElement = new ListElement(element);
+            if (index == 0) {
+                newElement.next = first;
+                first = newElement;
+            } else {
+                ListElement previous = getElement(index - 1);
+                newElement.next = previous.next;
+                previous.next = newElement;
+            }
+        }
 	}
 
 	@Override
 	public T remove(int index) {
 		// TODO: Implement
-		return null;
+		if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (index == 0) {
+            T oldValue = first.value;
+            first = first.next;
+            return oldValue;
+        } else {
+            ListElement previous = getElement(index - 1);
+            ListElement current = previous.next;
+            T oldValue = current.value;
+            previous.next = current.next;
+            return oldValue;
+        }
 	}
 
 	@Override
 	public int indexOf(Object o) {
 		// TODO: Implement
-		return 0;
+		int index = 0;
+        ListElement current = first;
+        while (current != null) {
+            if (o == null ? current.value == null : o.equals(current.value)) {
+                return index;
+            }
+            index++;
+            current = current.next;
+        }
+        return -1;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
 		// TODO: Implement
-		return 0;
+	        int index = 0;
+	        int lastIndex = -1;
+	        ListElement current = first;
+	        while (current != null) {
+	            if (o == null ? current.value == null : o.equals(current.value)) {
+	                lastIndex = index;
+	            }
+	            index++;
+	            current = current.next;
+	        }
+	        return lastIndex;
 	}
 
 	@Override
