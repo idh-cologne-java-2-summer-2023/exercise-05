@@ -13,12 +13,12 @@ public class MyLinkedList<T> implements List<T> {
 	 * because it will now whether there is a next element.
 	 */
 	ListElement first;
+	int index;
 	
 	
 	@Override
-	public int size() {
-		// TODO Implement!
-		return 0;
+	public  int size() {
+		return this.size();
 	}
 
 	@Override
@@ -27,9 +27,14 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public boolean contains(Object o) {
-		// TODO Implement!
-		return false;
+	public boolean contains(Object o) { 
+		if (first.equals(o)) {
+			System.out.println("LinkedList contains " + o);
+			return true;
+		} else {
+			System.out.println("LinkedList doesn't contain " + o);
+			return false;
+		}
 	}
 
 	@Override
@@ -52,12 +57,13 @@ public class MyLinkedList<T> implements List<T> {
 		};
 	}
 
+	
 	@Override
 	public Object[] toArray() {
 		// TODO Implement!
 		return null;
 	}
-
+   
 	@Override
 	public <E> E[] toArray(E[] a) {
 		if (a.length < size()) {
@@ -82,7 +88,11 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		if (first == o) {
+			first = null;
+			
+			return true;
+		}
 		return false;
 	}
 
@@ -103,8 +113,13 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
+		if(this.equals(index)) {
+			for (T t : c) 
+				this.add(t);
+			return true;
+		}
 		return false;
+		
 	}
 
 	@Override
@@ -132,30 +147,43 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
+		if (this.equals(index)) {
+			first.equals(element);
+		}
 		return null;
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		first = new ListElement(element);
+		index = index+1;
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
+		index = index-1;
 		return null;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		index = 0;
+		while (this != o){
+			for (;1 < 100;) {
+			index++;
+			}
+		}
+		if (this == o){
+			return index;
+        }
+		return index;
 	}
 
+	// Not sure how to do that 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
+		
+		
 		return 0;
 	}
 
@@ -276,8 +304,10 @@ public class MyLinkedList<T> implements List<T> {
 		ll.add("Hallo");
 		ll.add("Welt");
 		ll.get(0);
+		ll.getElement(1);
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		ll.size();
 	}
 }

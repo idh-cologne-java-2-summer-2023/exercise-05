@@ -54,7 +54,7 @@ public class Document {
 
 		@Override
 		public String next() {
-			pos ++;
+			pos++;
 			return documentText;
 		}
 		
