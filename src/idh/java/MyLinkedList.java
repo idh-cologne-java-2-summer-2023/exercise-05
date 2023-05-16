@@ -13,11 +13,19 @@ public class MyLinkedList<T> implements List<T> {
 	 * because it will now whether there is a next element.
 	 */
 	ListElement first;
+	int index;
 	
 	
 	@Override
 	public int size() {
 		// TODO Implement!
+		// on it!         ----------------------WIP
+		while (true){
+			
+			when (add(T) == true);{
+                 index ++;
+			}
+		}
 		return 0;
 	}
 
@@ -28,10 +36,13 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		if (first != Object o){
+		if (first != o){
 		return false;
 		}
-	}//the point is to find out if the list contains the Object o, right?
+		else {
+			return true;
+		}
+	}//done
 
 	@Override
 	public Iterator<T> iterator() {
@@ -55,7 +66,9 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		Object[] LE = [MyLinkedList];
+		if(a.length < size()){
+			a = (E[]) new Object[size()];
+		}
 		// TODO Implement!
 		//On it                      <-------------------under Construction-----------
 		return null;
@@ -86,9 +99,15 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean remove(Object o) {
 		// TODO: Implement
-		//on it
+		//done (?)
+		if (this == o){
 		o = false;
+		index = index -1;
+		return true;
+		}
+		else {
 		return false;
+		}
 	}
 
 	@Override
@@ -109,6 +128,7 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
 		// TODO Implement!
+		// on it
 		return false;
 	}
 
