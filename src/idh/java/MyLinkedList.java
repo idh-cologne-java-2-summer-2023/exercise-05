@@ -13,11 +13,16 @@ public class MyLinkedList<T> implements List<T> {
 	 * because it will now whether there is a next element.
 	 */
 	ListElement first;
+	//first ist der head
+	ListElement last;
+	//last ist der Tail, wird eventuell nicht gebraucht, es gibt eine last()-Methode
 	
 	
 	@Override
 	public int size() {
 		// TODO Implement!
+		//Returns number of elements in this list
+		
 		return 0;
 	}
 
@@ -29,6 +34,8 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean contains(Object o) {
 		// TODO Implement!
+		//Returns true if this list contains the specified element.
+		
 		return false;
 	}
 
@@ -54,7 +61,10 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
+	// TODO Implement!
+		Object[] oArray = ll.toArray(new Object[0]);
+		//wie kann ich auf die liste ll zugreifen?
+
 		return null;
 	}
 
@@ -82,6 +92,7 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
+		
 		// TODO: Implement
 		return false;
 	}
@@ -272,9 +283,12 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	public static void main(String[] args) {
+		//hier wird die LinkedList ll erstellt 
 		MyLinkedList<String> ll = new MyLinkedList<String>();
+		//"Hallo" und "Welt" werden der ll hinzugefügt
 		ll.add("Hallo");
 		ll.add("Welt");
+		
 		ll.get(0);
 		for (String s : ll) {
 			System.out.println(s);
