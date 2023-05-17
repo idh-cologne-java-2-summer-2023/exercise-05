@@ -1,5 +1,6 @@
 package idh.java;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -17,8 +18,14 @@ public class MyLinkedList<T> implements List<T> {
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int counter = 0;
+		Iterator<?> iterator = iterator();
+		
+		while(iterator.hasNext()) {
+			iterator.next();
+			counter++;
+		}
+		return counter;
 	}
 
 	@Override
@@ -28,8 +35,17 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		Iterator<?> iterator = iterator();
+		
+		while(iterator.hasNext()) {
+			
+			if(iterator.next().equals(o)) {
+				return true;
+			}
+			
+		}
 		return false;
+
 	}
 
 	@Override
@@ -54,8 +70,16 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		int zise = size();
+		int i = 0;
+		Iterator<?> iterator = iterator();
+		
+		Object[] orray = new Object[zise];
+		while (iterator.hasNext()) {
+			orray[i] = iterator.next();
+			i++;
+		}
+		return orray;
 	}
 
 	@Override
@@ -82,10 +106,29 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		ListElement next = first.next;
+		ListElement current = first;
+		
+		if (isEmpty()) {
+			return false;
+		} else if(first.value.equals(o)) {
+			first = first.next;
+			return true;
+		}
+		
+		for (int i = 0; i < size(); i++) {
+			if(next != null) {
+				if(next.value.equals(o)) {
+					current.next = next.next;
+					return true;
+				}  
+				current = next;
+				next = next.next;	
+			}
+		}
 		return false;
 	}
-
+	
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		for (Object o : c)
@@ -103,9 +146,32 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
-	}
+		//ListElement next = first.next;
+		//ListElement keeper ;
+		
+//		if(isEmpty()) {
+//			return false;
+//		} else if(){
+//			
+//		} else {	
+//			
+//			for (int i = 0; i < index; i++) {
+//				next =  next.next;
+//			}
+//			
+//			keeper = next.next;
+//			
+//			for (T t : c) 
+//				this.add(t);
+//			
+//			return true;
+//		}
+//		return false;
+		
+		for (T t : c) 
+			this.add(index,t);
+		return true;
+}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
@@ -132,31 +198,82 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+		
+		return getElement(index).value = element;
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		ListElement current = getElement(index);
+		ListElement previousNext = getElement(index -1);
+		ListElement listElement = new ListElement(element);
+		
+		previousNext.next = listElement;
+		listElement.next = current;
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
-		return null;
+		T removedElement = get(index);
+		ListElement next = getElement(index +1);
+		ListElement previous = getElement(index -1);
+		
+		if(previous == null) {
+			
+			first = next;
+			
+		} else {
+			
+		previous.next = next;
+		
+		}
+		
+		return removedElement;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		Iterator<T> iterator = iterator();
+		
+		int indx = 0;
+		
+		while(iterator.hasNext()) {
+			
+			if(iterator.next().equals(o)) {
+				
+				return indx;
+				
+			}else {
+				
+				indx++;
+				iterator.next();
+				
+			}
+		}
+		return -1;
 	}
 
 	@Override
-	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+	public int lastIndexOf(Object o) { //toDO
+		
+		int indx = size() -1;
+		
+		T elementIndex = get(indx);
+		
+		for (int i = 0; i > indx; i++) {
+			
+			if (elementIndex.equals(o)) {
+				
+				return indx;
+				
+			} else {
+				
+				indx--;
+				elementIndex = get(indx);
+				
+			}
+		}
+		return -1;
 	}
 
 	@Override
@@ -279,5 +396,14 @@ public class MyLinkedList<T> implements List<T> {
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		ll.add(2,"Keks");
+		ll.set(0, "gut");
+		System.err.println(ll.lastIndexOf("Welt"));
+		System.out.println(ll.contains("gut"));
+		System.out.println(ll.remove("gut"));
+		System.out.println(ll.size());
+		System.out.println(Arrays.toString(ll.toArray()));
+		System.out.println(ll.remove(0));
+		System.out.println(ll.indexOf("Keks"));
 	}
 }
