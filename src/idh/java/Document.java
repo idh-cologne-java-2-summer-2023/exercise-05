@@ -2,6 +2,8 @@ package idh.java;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.Iterator;
+import java.util.StringTokenizer;
 import java.io.IOException;
 
 public class Document {
@@ -31,6 +33,24 @@ public class Document {
 	
 	public static final void main(String[] args) throws IOException {
 		Document d = Document.readFromFile(new File("data/dracula.txt"));
+		
+		d.print();
+	}
+	
+	private Iterator<Object> iterator(){
+		StringTokenizer strtoken = new StringTokenizer(this.documentText);
+		
+		return strtoken.asIterator();
+	}
+	
+	private void print() {
+		Iterator<?> iterator = iterator();
+		
+		while (iterator.hasNext()) {
+			System.out.println(iterator.next());
+			
+		}
+		
 	}
 	
 }
