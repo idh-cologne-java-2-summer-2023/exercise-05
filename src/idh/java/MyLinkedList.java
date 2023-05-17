@@ -141,20 +141,20 @@ public class MyLinkedList<T> implements List<T> {
 			throw new IndexOutOfBoundsException("invalid index: " + index);
 		}
 		
-		ListElement previous = getElement(index -1);
-		ListElement current = previous != null ? previous.next : first;
-		
+//		ListElement previous = getElement(index -1);
+//		ListElement current = previous != null ? previous.next : first;
+//		
 		for (T element : c) {
-			ListElement newEl = new ListElement(element);
-			if (previous == null) {
-				newEl.next = first;
-				first = newEl;
-			}
-			else {
-				newEl.next = current;
-				current = newEl;
-			}
-		//	add(index, element);
+//			ListElement newEl = new ListElement(element);
+//			if (previous == null) {
+//				newEl.next = first;
+//				first = newEl;
+//			}
+//			else {
+//				newEl.next = current;
+//				current = newEl;
+//			}
+			add(index, element);
 			 return true;
 		}
 		
