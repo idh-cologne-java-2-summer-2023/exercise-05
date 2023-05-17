@@ -1,5 +1,6 @@
 package idh.java;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -14,11 +15,16 @@ public class MyLinkedList<T> implements List<T> {
 	 */
 	ListElement first;
 	
-	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int count = 0;
+		Iterator iterator = iterator();
+		while(iterator.hasNext()) {
+			iterator.next();
+			count++;
+		}
+		
+		return count;
 	}
 
 	@Override
@@ -28,7 +34,12 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		Iterator iterator = iterator();
+		while(iterator.hasNext()) {
+			if(iterator.next().equals(o)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -54,8 +65,18 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		int size = size();
+		int i = 0;
+		Iterator iterator = iterator();
+		
+		Object[] array = new Object[size];
+		
+		while(iterator.hasNext()) {
+			array[i] = iterator.next();
+			i++;
+		}
+		
+		return array;
 	}
 
 	@Override
@@ -82,7 +103,26 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		ListElement next = first.next;
+		ListElement current = first;
+		
+		if (isEmpty()) {
+			return false;
+		} else if(first.value.equals(o)) {
+			first = first.next;
+			return true;
+		}
+		
+		for (int i = 0; i < size(); i++) {
+			if(next != null) {
+				if(next.value.equals(o)) {
+					current.next = next.next;
+					return true;
+				}  
+				current = next;
+				next = next.next;	
+			}
+		}
 		return false;
 	}
 
@@ -103,7 +143,10 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
+		for( T t : c) {
+			this.add(index, t);
+			return true;
+		}
 		return false;
 	}
 
@@ -132,31 +175,63 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+		ListElement lElement = getElement(index);
+		lElement.value = element;
+		return element;
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		ListElement previous = getElement(index - 1);
+		ListElement current = getElement(index);
+		ListElement newListElement = new ListElement(element);
+		
+		previous.next = newListElement;
+		newListElement.next = current;
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
-		return null;
+		T element = get(index);
+		ListElement previous = getElement(index - 1);
+		ListElement next = getElement(index + 1);
+		
+		if (previous == null) {
+			first = next;
+		} else {
+			previous.next = next;
+		}
+		return element;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int index = 0;
+		
+		for (int i = 0; i < index; i++) {
+			if(equals(o)) {
+				return index;
+			} else {
+				index++;
+			}
+		}
+		return index;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int index = size() - 1;
+		T elementIndex = get(index);
+		
+		while (true) {
+			if (elementIndex.equals(o)) {
+				break;
+			} else {
+				index--;
+				elementIndex = get(index);
+			}
+		}
+		return index;
 	}
 
 	@Override
@@ -275,9 +350,22 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
+		ll.add("test");
 		ll.get(0);
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		System.out.println(ll.size());
+		System.out.println(ll.contains("Hallo"));
+		System.out.println(ll.remove("test"));
+		//System.out.println(Arrays.toString(ll.toArray()));
+		ll.set(0, "jaaaxDDD");
+		//System.out.println(Arrays.toString(ll.toArray()));
+		ll.add(1, "kekw");
+		ll.remove(0);
+		System.out.println(Arrays.toString(ll.toArray()));
+		ll.indexOf("Welt");
+		ll.lastIndexOf("Welt");
+		
 	}
 }
