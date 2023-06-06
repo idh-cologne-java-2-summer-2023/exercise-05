@@ -30,6 +30,7 @@ public class MyLinkedList<T> implements List<T> {
 		return first == null;
 	}
 
+
 	@Override
 	// edited
 	public boolean contains(Object o) {
