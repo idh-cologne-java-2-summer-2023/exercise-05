@@ -79,11 +79,13 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public <E> E[] toArray(E[] a) {
 		if (a.length < size()) {
-			a = (E[]) new Object[size()];
+			E[] es = (E[]) new Object[size()];
+			a = es;
 		}
 		int i = 0;
 		for (T t : this) {
-			a[i++] = (E) t;
+			E t2 = (E) t;
+			a[i++] = t2;
 		}
 		return a;
 	}
