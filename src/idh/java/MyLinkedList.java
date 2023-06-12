@@ -9,34 +9,38 @@ import java.util.ListIterator;
 public class MyLinkedList<T> implements List<T> {
 
 	/**
-	 * We only need to store the very first element of our list, 
+	 * We only need to store the very first element of our list,
 	 * because it will now whether there is a next element.
 	 */
-	ListElement first;
-	
-	
+	ListElement prefirst = new ListElement(null);
+
+
 	@Override
 	public int size() {
-		// TODO Implement!
+		int i = 0;
+		for (T x : this)
+			i++;
 		return 0;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return first == null;
+		return prefirst.next == null;
 	}
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
+		for (T x : this)
+			if (o.equals(x))
+				return true;
 		return false;
 	}
 
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<T>() {
-			ListElement next = first;
-			
+			ListElement next = prefirst.next;
+
 			@Override
 			public boolean hasNext() {
 				return next != null;
@@ -48,7 +52,7 @@ public class MyLinkedList<T> implements List<T> {
 				next = next.next;
 				return ret;
 			}
-			
+
 		};
 	}
 
@@ -73,10 +77,7 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean add(T e) {
 		ListElement newListElement = new ListElement(e);
-		if (first == null)
-			first = newListElement;
-		else
-			last().next = newListElement;
+		last().next = newListElement;
 		return true;
 	}
 
@@ -96,7 +97,7 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(Collection<? extends T> c) {
-		for (T t : c) 
+		for (T t : c)
 			this.add(t);
 		return true;
 	}
@@ -110,7 +111,7 @@ public class MyLinkedList<T> implements List<T> {
 	@Override
 	public boolean removeAll(Collection<?> c) {
 		boolean r = true;
-		for (Object o : c) 
+		for (Object o : c)
 			r = r || this.remove(o);
 		return r;
 	}
@@ -122,7 +123,7 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public void clear() {
-		first = null;
+		prefirst.next = null;
 	}
 
 	@Override
@@ -164,9 +165,9 @@ public class MyLinkedList<T> implements List<T> {
 		return new ListIterator<T>() {
 
 			ListElement previous = null;
-			ListElement next = first;
+			ListElement next = prefirst;
 			int index;
-			
+
 			@Override
 			public boolean hasNext() {
 				return next != null;
@@ -213,9 +214,9 @@ public class MyLinkedList<T> implements List<T> {
 
 			@Override
 			public void add(T e) {
-				throw new UnsupportedOperationException();				
+				throw new UnsupportedOperationException();
 			}
-			
+
 		};
 	}
 
@@ -228,42 +229,42 @@ public class MyLinkedList<T> implements List<T> {
 	public List<T> subList(int fromIndex, int toIndex) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	private class ListElement {
 		T value;
 		ListElement next;
-		
+
 		ListElement(T value) {
 			this.value = value;
 		}
 	}
-	
+
 	/**
 	 * Internal method that iterates over the list, returning the last element (i.e., the one whose next field is null)
 	 * @return
 	 */
 	private ListElement last() {
-		if (first == null)
+		if (prefirst == null)
 			return null;
-		ListElement current = first;
-		
+		ListElement current = prefirst.next;
+
 		while(current.next != null) {
 			current = current.next;
 		}
 		return current;
 	}
-	
-	/** 
+
+	/**
 	 * Internal method to get the list element (not the value) of the list at the specified index position.
 	 * @param index
 	 * @return
 	 */
 	private ListElement getElement(int index) {
-		if (isEmpty()) 
+		if (isEmpty())
 			return null;
-		ListElement current = first;
+		ListElement current = prefirst;
 		while(current != null) {
-			if (index == 0) 
+			if (index == 0)
 				return current;
 			index--;
 			current = current.next;
@@ -272,7 +273,7 @@ public class MyLinkedList<T> implements List<T> {
 	}
 
 	public static void main(String[] args) {
-		MyLinkedList<String> ll = new MyLinkedList<String>();
+		MyLinkedList<String> ll = new MyLinkedList<>();
 		ll.add("Hallo");
 		ll.add("Welt");
 		ll.get(0);
