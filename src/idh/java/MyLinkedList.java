@@ -17,8 +17,13 @@ public class MyLinkedList<T> implements List<T> {
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		return 0;
+		int counter = 1;
+		ListElement current = first;
+		
+		while(current.next != null) {
+			counter++;
+			current = current.next;
+		}return counter;
 	}
 
 	@Override
@@ -28,8 +33,17 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Implement!
-		return false;
+		boolean bool =false;
+		ListElement current = first;
+		
+		while(current.next != null) {
+			if(current.value.equals(o)) {
+				bool =true;
+				break;
+			}
+			current = current.next;
+		}return bool;
+		
 	}
 
 	@Override
@@ -54,8 +68,19 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		// TODO Implement!
-		return null;
+		ListElement current = first;
+		int counter1 = 0;
+		
+		while(current.next != null) {
+			counter1++;
+			current = current.next;
+		}
+			Object[] neuesArray = new Object[counter1];
+			for (int i = 0; i < counter1; i++) {
+				neuesArray[i] = current.value;
+			}
+
+		return neuesArray;
 	}
 
 	@Override
@@ -82,7 +107,15 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO: Implement
+		ListElement current = first;
+		
+		while(current.next != null) {
+			current = current.next;
+			if(current.value.equals(o)) {
+				current = current.next;
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -103,8 +136,9 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		// TODO Implement!
-		return false;
+		for (T t : c) 
+			this.set(index, t);
+		return true;
 	}
 
 	@Override
@@ -132,31 +166,77 @@ public class MyLinkedList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: Implement
-		return null;
+		int zw = 0;
+		ListElement current = first;
+		try {
+		while(current.next != null) {
+			zw++;
+			if(index == zw) {
+				current.value = element;
+			}
+			current = current.next;
+		}} catch(Exception e) {
+			System.out.println("The Index is out of range.");
+		}
+		
+		return element;
 	}
 
 	@Override
 	public void add(int index, T element) {
-		// TODO: Implement
+		try {
+			this.remove(index);
+			this.add(element);
+		}catch(Exception e) {
+			System.out.println("The Index is out of range.");
+		}
+		
+	
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO: Implement
-		return null;
+		T current = (T) first;
+		for (int i = 0; i < this.size(); i++) {
+			while(current != null) {
+				if(i==index) {
+					this.get(i);
+					this.set(i--, null);
+				}
+			}			
+		}
+		return current;
+
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int zw = 0;
+		int nichtgefunden = -1;
+		ListElement current = first;
+		
+		while(current != null) {
+			if(current.value.equals(o)) {
+				return zw;
+			} 
+			zw++;
+			current = current.next;
+		}return nichtgefunden;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO: Implement
-		return 0;
+		int zw = 0;
+		int meingrosser = -1;
+		ListElement current = first;
+		
+		while(current != null) {
+			if(current.value.equals(o)) {
+				meingrosser = zw;
+			}
+		}
+		
+		return meingrosser;
 	}
 
 	@Override
@@ -275,9 +355,9 @@ public class MyLinkedList<T> implements List<T> {
 		MyLinkedList<String> ll = new MyLinkedList<String>();
 		ll.add("Hallo");
 		ll.add("Welt");
-		ll.get(0);
+		
 		for (String s : ll) {
 			System.out.println(s);
 		}
+		System.out.println(ll.indexOf("Hallo"));
 	}
-}
